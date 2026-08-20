@@ -1,12 +1,9 @@
 'use client';
-import React, { useEffect } from 'react';
+
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ProductListClient from './ProductListClient';
 import { useAuth } from '../../../context/AuthContext';
-
-export const metadata = {
-  title: 'áæÍÉ ÇáÊÍßã - ÇÏÇÑÉ ÇáãäÊÌÇÊ',
-};
 
 export default function AdminProductsPage() {
   const { user, loading, isAdmin } = useAuth();
@@ -19,12 +16,12 @@ export default function AdminProductsPage() {
   }, [user, loading, isAdmin, router]);
 
   if (loading || !user || !isAdmin) {
-    return <div className="p-6">ÌÇÑò ÇáÊÍŞŞ ãä ÇáÕáÇÍíÇÊ...</div>;
+    return <div className="p-6">Ø¬Ø§Ø±Ù Ø§Ù„ØªØ­Ù‚Ù‚ Ù…Ù† Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ§Øª...</div>;
   }
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">ÅÏÇÑÉ ÇáãäÊÌÇÊ</h1>
+      <h1 className="text-2xl font-bold mb-4">Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„Ù…Ù†ØªØ¬Ø§Øª</h1>
       <ProductListClient />
     </div>
   );

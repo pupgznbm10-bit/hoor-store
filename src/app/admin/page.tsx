@@ -42,10 +42,15 @@ export default function AdminPage() {
   }, [authLoading, user, isAdmin, router]);
 
   const loadOrders = async () => {
-    const res = await fetch('/api/orders', { cache: 'no-store' });
-    const data = await res.json();
-    setOrders(data.orders ?? []);
-    setLoading(false);
+    try {
+      const res = await fetch('/api/orders', { cache: 'force-cache' });
+      const data = await res.json();
+      setOrders(data.orders ?? []);
+    } catch (err) {
+      console.error('loadOrders error', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -271,7 +276,13 @@ export default function AdminPage() {
                 <h3 className="text-lg font-bold">إنشاء طلب جديد</h3>
                 <button onClick={() => setShowCreateOrder(false)} className="text-slate-500">إلغاء</button>
               </div>
-              <OrderCreatorClient onDone={() => { setShowCreateOrder(false); loadOrders(); }} />
+              <OrderCreatorClient
+                onClose={() => {
+                  setShowCreateOrder(false);
+                  loadOrders();
+                }}
+                onCreated={() => loadOrders()}
+              />
             </div>
           </div>
         </div>

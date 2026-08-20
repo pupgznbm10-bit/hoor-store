@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readProducts, createProduct } from '../../../../../lib/products';
-import { getCurrentUserFromRequest, isAdminUser } from '../../../../../lib/auth';
-import { broadcastEvent } from '../../../../../lib/events';
+import { readProducts, createProduct } from '../../../../lib/products';
+import { getCurrentUserFromRequest, isAdminUser } from '../../../../lib/auth';
+import { broadcastEvent } from '../../../../lib/events';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const created = await createProduct(body);
-    try { await broadcastEvent({ type: 'products:updated', payload: { id: created.id, action: 'created' } }); } catch(e){}
+    try { await broadcastEvent({ type: 'products:updated', payload: { id: created.id, action: 'created' } }); } catch (e) {}
     return NextResponse.json({ message: 'تم إضافة المنتج', product: created });
   } catch (err) {
     console.error('admin products POST error', err);

@@ -8,11 +8,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const { id } = await params;
     const products = await readProducts();
     const p = products.find((x) => x.id === id);
-    if (!p) return NextResponse.json({ message: '������ ��� �����' }, { status: 404 });
+    if (!p) return NextResponse.json({ message: 'لم يتم العثور على المنتج' }, { status: 404 });
     return NextResponse.json({ product: p });
   } catch (err) {
     console.error('products GET by id error', err);
-    return NextResponse.json({ message: '��� �� ������' }, { status: 500 });
+    return NextResponse.json({ message: 'خطأ في النظام' }, { status: 500 });
   }
 }
 
@@ -24,12 +24,11 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const body = await request.json();
     const updated = await updateProduct(id, body);
     if (!updated) return NextResponse.json({ message: 'لم يتم العثور على المنتج' }, { status: 404 });
-    // broadcast product update
-    try { await broadcastEvent({ type: 'products:updated', payload: { id } }); } catch(e){}
+    try { await broadcastEvent({ type: 'products:updated', payload: { id } }); } catch (e) {}
     return NextResponse.json({ message: 'تم التحديث', product: updated });
   } catch (err) {
     console.error('products PUT error', err);
-    return NextResponse.json({ message: '��� �� ������' }, { status: 500 });
+    return NextResponse.json({ message: 'خطأ في النظام' }, { status: 500 });
   }
 }
 
@@ -43,6 +42,6 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     return NextResponse.json({ message: 'تم الحذف' });
   } catch (err) {
     console.error('products DELETE error', err);
-    return NextResponse.json({ message: '��� �� ������' }, { status: 500 });
+    return NextResponse.json({ message: 'خطأ في النظام' }, { status: 500 });
   }
 }

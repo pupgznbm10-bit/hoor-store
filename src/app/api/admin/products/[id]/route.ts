@@ -1,27 +1,49 @@
-import { NextResponse } from 'next/server';
-import { updateProduct, deleteProduct } from '../../../../../../lib/products';
+import { NextRequest, NextResponse } from 'next/server';
+import { updateProduct, deleteProduct } from '../../../../../lib/products';
+import { getCurrentUserFromRequest, isAdminUser } from '../../../../../lib/auth';
+import { broadcastEvent } from '../../../../../lib/events';
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const user = await getCurrentUserFromRequest(request);
+    if (!user || !isAdminUser(user)) {
+      return NextResponse.json({ message: 'ØºÙŠØ± Ù…ØµØ±Ø­' }, { status: 403 });
+    }
+
+    const { id } = await params;
     const body = await request.json();
     const updated = await updateProduct(id, body);
-    if (!updated) return NextResponse.json({ message: 'ÇáãäÊÌ ÛíÑ ãæÌæÏ' }, { status: 404 });
-    return NextResponse.json({ message: 'Êã ÇáÊÍÏíË', product: updated });
+    if (!updated) return NextResponse.json({ message: 'Ù„Ù… ÙŠØªÙ… Ø§Ù„Ø¹Ø«ÙˆØ± Ø¹Ù„Ù‰ Ø§Ù„Ù…Ù†ØªØ¬' }, { status: 404 });
+
+    try {
+      await broadcastEvent({ type: 'products:updated', payload: { id, action: 'updated' } });
+    } catch (e) {}
+
+    return NextResponse.json({ message: 'ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ù†ØªØ¬', product: updated });
   } catch (err) {
     console.error('admin product PATCH error', err);
-    return NextResponse.json({ message: 'ÎØÃ İí ÇáäÙÇã' }, { status: 500 });
+    return NextResponse.json({ message: 'Ø®Ø·Ø£ ÙÙŠ Ø§Ù„Ù†Ø¸Ø§Ù…' }, { status: 500 });
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const user = await getCurrentUserFromRequest(request);
+    if (!user || !isAdminUser(user)) {
+      return NextResponse.json({ message: 'ØºÙŠØ± Ù…ØµØ±Ø­' }, { status: 403 });
+    }
+
+    const { id } = await params;
     await deleteProduct(id);
-    return NextResponse.json({ message: 'Êã ÇáÍĞİ' });
+
+    try {
+      await broadcastEvent({ type: 'products:updated', payload: { id, action: 'deleted' } });
+    } catch (e) {}
+
+    return NextResponse.json({ message: 'ØªÙ… Ø­Ø°Ù Ø§Ù„Ù…Ù†ØªØ¬' });
   } catch (err) {
     console.error('admin product DELETE error', err);
-    return NextResponse.json({ message: 'ÎØÃ İí ÇáäÙÇã' }, { status: 500 });
+    return NextResponse.json({ message: 'Ø®Ø·Ø£ ÙÙŠ Ø§Ù„Ù†Ø¸Ø§Ù…' }, { status: 500 });
   }
 }
 

@@ -1,26 +1,5 @@
 [
   {
-    "id": "men-01",
-    "name": "Royal Cedar",
-    "brand": "Hoor",
-    "category": "men",
-    "price": 890,
-    "rating": 4.8,
-    "description": "رائحة خشبية أنيقة مع لمسة من الفانيليا والعود لملامح رجالية متوازنة.",
-    "fragranceFamily": "خشبي",
-    "notes": {
-      "top": ["ليمون", "بيري"],
-      "heart": ["عود", "سافران"],
-      "base": ["سندل", "فانيليا", "مسك"]
-    },
-    "volumes": ["50ml", "100ml"],
-    "images": [
-      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
-    ],
-    "bestseller": true
-  },
-  {
     "id": "men-02",
     "name": "Desert Monk",
     "brand": "Hoor",
@@ -30,16 +9,37 @@
     "description": "مزيج خفيف من الخشب المميز مع لمسات من البخور والقرنفل.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["برتقال", "رزماري"],
-      "heart": ["قرفة", "مشمش"],
-      "base": ["عود", "خشب الأرز", "مسك"]
+      "top": [
+        "برتقال",
+        "رزماري"
+      ],
+      "heart": [
+        "قرفة",
+        "مشمش"
+      ],
+      "base": [
+        "عود",
+        "خشب الأرز",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
-    "images": [
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    "volumes": [
+      "50ml",
+      "75ml"
     ],
-    "bestseller": true
+    "images": [
+      "/uploads/1787248905525-las6vk-Annotation_2026-08-20_160856.png"
+    ],
+    "bestseller": true,
+    "tags": [
+      "برتقال",
+      "رزماري",
+      "قرفة",
+      "مشمش",
+      "عود",
+      "خشب الأرز",
+      "مسك"
+    ]
   },
   {
     "id": "men-03",
@@ -51,11 +51,24 @@
     "description": "مزيج فخم من الخشب والعنبر مع حضور قوي وملمس باهت ومتوازن.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["ليمون", "توت"],
-      "heart": ["عود", "زعفران"],
-      "base": ["عنبر", "خشب", "مستحضر" ]
+      "top": [
+        "ليمون",
+        "توت"
+      ],
+      "heart": [
+        "عود",
+        "زعفران"
+      ],
+      "base": [
+        "عنبر",
+        "خشب",
+        "مستحضر"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -72,11 +85,23 @@
     "description": "عطر يومي أنيق ومعدّل للبرود مع لمسة كحولية منعشة.",
     "fragranceFamily": "حمضي",
     "notes": {
-      "top": ["ليمون", "جريب فروت"],
-      "heart": ["ريحان", "أوكالبتوس"],
-      "base": ["خشب", "مusk"]
+      "top": [
+        "ليمون",
+        "جريب فروت"
+      ],
+      "heart": [
+        "ريحان",
+        "أوكالبتوس"
+      ],
+      "base": [
+        "خشب",
+        "مusk"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -93,11 +118,24 @@
     "description": "رائحة جادة وثقيلة مع ورق توتون وسندل دافئ في القاعدة.",
     "fragranceFamily": "دوخان",
     "notes": {
-      "top": ["رائحة دخان", "ورود"],
-      "heart": ["تايلاند", "رائحة شجرة"],
-      "base": ["سندل", "دخان", "مسك"]
+      "top": [
+        "رائحة دخان",
+        "ورود"
+      ],
+      "heart": [
+        "تايلاند",
+        "رائحة شجرة"
+      ],
+      "base": [
+        "سندل",
+        "دخان",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80"
@@ -114,11 +152,23 @@
     "description": "رائحة مائية بطيئة مع رائحة رملية وحريرية ملائمة للأنشطة الليلية.",
     "fragranceFamily": "مائي",
     "notes": {
-      "top": ["ليمون", "زعتر"],
-      "heart": ["رمال", "قهوة"],
-      "base": ["خشب", "مستحضر" ]
+      "top": [
+        "ليمون",
+        "زعتر"
+      ],
+      "heart": [
+        "رمال",
+        "قهوة"
+      ],
+      "base": [
+        "خشب",
+        "مستحضر"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -135,11 +185,24 @@
     "description": "أمبير دافئ مع شجرة البخور وعطر خفيف يدل على الثقة والهيبة.",
     "fragranceFamily": "عنبر",
     "notes": {
-      "top": ["برتقالي", "فلفل"],
-      "heart": ["مغنسي", "صندل"],
-      "base": ["عنبر", "مسك", "فانيليا"]
+      "top": [
+        "برتقالي",
+        "فلفل"
+      ],
+      "heart": [
+        "مغنسي",
+        "صندل"
+      ],
+      "base": [
+        "عنبر",
+        "مسك",
+        "فانيليا"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -156,11 +219,24 @@
     "description": "حركة خشبية ناعمة مع رائحة ورقية ومظهر أنيق في المناسبات الرسمية.",
     "fragranceFamily": "خشبي",
     "notes": {
-      "top": ["أوكالبتوس", "جوز الهند"],
-      "heart": ["سندل", "ياسمين"],
-      "base": ["عود", "خشب", "موسك"]
+      "top": [
+        "أوكالبتوس",
+        "جوز الهند"
+      ],
+      "heart": [
+        "سندل",
+        "ياسمين"
+      ],
+      "base": [
+        "عود",
+        "خشب",
+        "موسك"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
@@ -177,11 +253,24 @@
     "description": "عطر فاخر ومشرق بلمسة زعفران وخصائص فخمة لأجواء المساء.",
     "fragranceFamily": "شرقي",
     "notes": {
-      "top": ["برتقال", "قرفة"],
-      "heart": ["زعفران", "مشمش"],
-      "base": ["مسك", "عود", "خشب"]
+      "top": [
+        "برتقال",
+        "قرفة"
+      ],
+      "heart": [
+        "زعفران",
+        "مشمش"
+      ],
+      "base": [
+        "مسك",
+        "عود",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -198,11 +287,23 @@
     "description": "راحة منعشة للنهار مع لمسات مائية وموحشة ومناسبة للارتداء اليومي.",
     "fragranceFamily": "مائي",
     "notes": {
-      "top": ["ليمون", "نعناع"],
-      "heart": ["رطوبة", "خزامى"],
-      "base": ["شيكور", "خشب"]
+      "top": [
+        "ليمون",
+        "نعناع"
+      ],
+      "heart": [
+        "رطوبة",
+        "خزامى"
+      ],
+      "base": [
+        "شيكور",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80"
@@ -219,11 +320,23 @@
     "description": "رائحة خفيفة من الحمضيات مع قاعدة خشبية هادئة وملمس أنيق.",
     "fragranceFamily": "حمضي",
     "notes": {
-      "top": ["برتقال", "اناناس"],
-      "heart": ["ريحان", "فانيليا"],
-      "base": ["خشب", "عنبر"]
+      "top": [
+        "برتقال",
+        "اناناس"
+      ],
+      "heart": [
+        "ريحان",
+        "فانيليا"
+      ],
+      "base": [
+        "خشب",
+        "عنبر"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
@@ -240,11 +353,24 @@
     "description": "عطر مستوحى من خشب الصندل الراقٍ مع لمسة من البخور والدفء.",
     "fragranceFamily": "خشبي",
     "notes": {
-      "top": ["برتقال", "فلفل"],
-      "heart": ["صندل", "مشمش"],
-      "base": ["خشب", "مسك", "جوزة الطيب"]
+      "top": [
+        "برتقال",
+        "فلفل"
+      ],
+      "heart": [
+        "صندل",
+        "مشمش"
+      ],
+      "base": [
+        "خشب",
+        "مسك",
+        "جوزة الطيب"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -261,11 +387,23 @@
     "description": "رائحة زهرية ناعمة مع توابل خفيفة لتطبع لمسة أنثوية لطيفة.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["فاكهة", "ليمون"],
-      "heart": ["ورد", "ياسمين"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "فاكهة",
+        "ليمون"
+      ],
+      "heart": [
+        "ورد",
+        "ياسمين"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -282,11 +420,23 @@
     "description": "عطر ناعم ورائع للنهار مع عطر وردي ناعم وقاعدة كريمية.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["فاكهة", "التوت"],
-      "heart": ["ورد", "أزهار"],
-      "base": ["مشمش", "مسك"]
+      "top": [
+        "فاكهة",
+        "التوت"
+      ],
+      "heart": [
+        "ورد",
+        "أزهار"
+      ],
+      "base": [
+        "مشمش",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -303,11 +453,23 @@
     "description": "رائحة أنثوية متعالية بالزهور الذهبية والفاكهة المعطرة.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["بطيخ", "ليمون"],
-      "heart": ["وردة", "زنبق"],
-      "base": ["فانيليا", "صندل"]
+      "top": [
+        "بطيخ",
+        "ليمون"
+      ],
+      "heart": [
+        "وردة",
+        "زنبق"
+      ],
+      "base": [
+        "فانيليا",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -324,11 +486,23 @@
     "description": "لون منعش ونيّ يزهو بحمضيات رقيقة مع عناصر زهرية لطيفة.",
     "fragranceFamily": "حمضي",
     "notes": {
-      "top": ["برتقال", "ليمون"],
-      "heart": ["مشمش", "نرجس"],
-      "base": ["أرز", "فانيليا"]
+      "top": [
+        "برتقال",
+        "ليمون"
+      ],
+      "heart": [
+        "مشمش",
+        "نرجس"
+      ],
+      "base": [
+        "أرز",
+        "فانيليا"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
@@ -345,11 +519,24 @@
     "description": "عطر ليلٍ فاخر حيث تبرز العنبر والورود في تناسق فاخر.",
     "fragranceFamily": "عنبر",
     "notes": {
-      "top": ["توت", "برتقال"],
-      "heart": ["ورد", "زنجبيل"],
-      "base": ["عنبر", "مسك", "فانيليا"]
+      "top": [
+        "توت",
+        "برتقال"
+      ],
+      "heart": [
+        "ورد",
+        "زنجبيل"
+      ],
+      "base": [
+        "عنبر",
+        "مسك",
+        "فانيليا"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
@@ -366,11 +553,23 @@
     "description": "رائحة مائية ورقيقة مع لمسات من الزهرية والخشب الناعم.",
     "fragranceFamily": "مائي",
     "notes": {
-      "top": ["كمثرى", "ليمون"],
-      "heart": ["وردة", "زنبق"],
-      "base": ["أرز", "خشب"]
+      "top": [
+        "كمثرى",
+        "ليمون"
+      ],
+      "heart": [
+        "وردة",
+        "زنبق"
+      ],
+      "base": [
+        "أرز",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -387,11 +586,23 @@
     "description": "مزيج زهرية ناعم في قاعدة من الفانيليا والوردة الرقيقة.",
     "fragranceFamily": "زهرية",
     "notes": {
-      "top": ["لوز", "برتقال"],
-      "heart": ["لوتس", "ياسمين"],
-      "base": ["فانيليا", "صندل"]
+      "top": [
+        "لوز",
+        "برتقال"
+      ],
+      "heart": [
+        "لوتس",
+        "ياسمين"
+      ],
+      "base": [
+        "فانيليا",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -408,11 +619,23 @@
     "description": "تركيبة متطورة تجمع بين الوردة والعود وتترك أثرًا أنيقًا في المساء.",
     "fragranceFamily": "شرقي",
     "notes": {
-      "top": ["برتقالي", "توت"],
-      "heart": ["ورد", "عود"],
-      "base": ["مِسْك", "خشب"]
+      "top": [
+        "برتقالي",
+        "توت"
+      ],
+      "heart": [
+        "ورد",
+        "عود"
+      ],
+      "base": [
+        "مِسْك",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
@@ -429,11 +652,23 @@
     "description": "رائحة سريعة التنقل مع لمسة من الفاكهة والورود للارتداء اليومي.",
     "fragranceFamily": "فاكهية",
     "notes": {
-      "top": ["أناناس", "برتقال"],
-      "heart": ["رودودندرون", "ورد"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "أناناس",
+        "برتقال"
+      ],
+      "heart": [
+        "رودودندرون",
+        "ورد"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -450,11 +685,23 @@
     "description": "أيريس ناعم مع سرّ الخشب والجيلي، مناسب للتجهيز الرسمي.",
     "fragranceFamily": "زهرية",
     "notes": {
-      "top": ["بطيخ", "رُزماري"],
-      "heart": ["أيريس", "ورد"],
-      "base": ["صندل", "مسك"]
+      "top": [
+        "بطيخ",
+        "رُزماري"
+      ],
+      "heart": [
+        "أيريس",
+        "ورد"
+      ],
+      "base": [
+        "صندل",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80"
@@ -471,11 +718,23 @@
     "description": "رائحة كريمية وبراقة من الفانيليا والخضروات الوردية.",
     "fragranceFamily": "فانيليا",
     "notes": {
-      "top": ["خوخ", "جوزة"],
-      "heart": ["وردة", "قرفة"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "خوخ",
+        "جوزة"
+      ],
+      "heart": [
+        "وردة",
+        "قرفة"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
@@ -492,11 +751,24 @@
     "description": "توازن فاخر بين زهرة الأوركيد والفاكهة والورود القوية.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["توت", "ليمون"],
-      "heart": ["أوركيد", "ورد"],
-      "base": ["مسك", "مِرْكاب", "صندل"]
+      "top": [
+        "توت",
+        "ليمون"
+      ],
+      "heart": [
+        "أوركيد",
+        "ورد"
+      ],
+      "base": [
+        "مسك",
+        "مِرْكاب",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -513,11 +785,24 @@
     "description": "عطر شرقي ملكي مميز ومهدئ يترك ثباتًا طويلًا كخارجية فاخرة.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["مشمش", "دخان"],
-      "heart": ["عود", "زعفران"],
-      "base": ["مسك", "عنبر", "خشب"]
+      "top": [
+        "مشمش",
+        "دخان"
+      ],
+      "heart": [
+        "عود",
+        "زعفران"
+      ],
+      "base": [
+        "مسك",
+        "عنبر",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -534,11 +819,24 @@
     "description": "مزيج شرقي دافئ يُشعل القوام مع لمسة من عصارة الزعفران.",
     "fragranceFamily": "شرقي",
     "notes": {
-      "top": ["فلفل", "برتقال"],
-      "heart": ["زعفران", "ورد"],
-      "base": ["مسك", "عود", "صندل"]
+      "top": [
+        "فلفل",
+        "برتقال"
+      ],
+      "heart": [
+        "زعفران",
+        "ورد"
+      ],
+      "base": [
+        "مسك",
+        "عود",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -555,11 +853,24 @@
     "description": "رمال دافئة وعنبر متوازن مع ملاحظات خشبية فاخرة.",
     "fragranceFamily": "عنبر",
     "notes": {
-      "top": ["ليمون", "خزامى"],
-      "heart": ["عنبر", "قصب"],
-      "base": ["فانيليا", "مسك", "صندل"]
+      "top": [
+        "ليمون",
+        "خزامى"
+      ],
+      "heart": [
+        "عنبر",
+        "قصب"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
@@ -576,11 +887,23 @@
     "description": "جولة شرقية خفيفة من خشب والسيكوب في أجواء رمضانية هادئة.",
     "fragranceFamily": "خشبي",
     "notes": {
-      "top": ["قرفة", "بنفسج"],
-      "heart": ["عود", "جوزة"],
-      "base": ["سندل", "مسك"]
+      "top": [
+        "قرفة",
+        "بنفسج"
+      ],
+      "heart": [
+        "عود",
+        "جوزة"
+      ],
+      "base": [
+        "سندل",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80"
@@ -597,11 +920,24 @@
     "description": "مسك شرقي بارد يدعم الخشب مع إيقاع جذاب ومتين.",
     "fragranceFamily": "مسكي",
     "notes": {
-      "top": ["مشمش", "حليب"],
-      "heart": ["مسك", "وردة"],
-      "base": ["عود", "صندل", "عنبر"]
+      "top": [
+        "مشمش",
+        "حليب"
+      ],
+      "heart": [
+        "مسك",
+        "وردة"
+      ],
+      "base": [
+        "عود",
+        "صندل",
+        "عنبر"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -618,11 +954,24 @@
     "description": "رائحة ملكية عميقة مستوحاة من حضارات الشرق وذويوه العطرية.",
     "fragranceFamily": "شرقي",
     "notes": {
-      "top": ["فلفل", "راوند"],
-      "heart": ["عود", "زهرة"],
-      "base": ["عنبر", "سنط", "مسك"]
+      "top": [
+        "فلفل",
+        "راوند"
+      ],
+      "heart": [
+        "عود",
+        "زهرة"
+      ],
+      "base": [
+        "عنبر",
+        "سنط",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
@@ -639,11 +988,24 @@
     "description": "توازن بين الخشب والزهور في قوام غني ومشرق للارتداء الرسمي.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["برتقال", "مشمش"],
-      "heart": ["وردة", "عود"],
-      "base": ["قرفة", "مسك", "صندل"]
+      "top": [
+        "برتقال",
+        "مشمش"
+      ],
+      "heart": [
+        "وردة",
+        "عود"
+      ],
+      "base": [
+        "قرفة",
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -660,11 +1022,24 @@
     "description": "خليط من الورود والعنبر مع دفء شرقي يبرز قوة الشخصية.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["فاكهة", "ليمون"],
-      "heart": ["ورد", "قرفة"],
-      "base": ["عنبر", "خشب", "مسك"]
+      "top": [
+        "فاكهة",
+        "ليمون"
+      ],
+      "heart": [
+        "ورد",
+        "قرفة"
+      ],
+      "base": [
+        "عنبر",
+        "خشب",
+        "مسك"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
@@ -681,11 +1056,24 @@
     "description": "عطر بدوي فخم يجمع بين الخشب والهواء الدافئ في رائحة متكاملة.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["برتقالي", "قرفة"],
-      "heart": ["عود", "رائحة شجر"],
-      "base": ["عنبر", "مسك", "خشب"]
+      "top": [
+        "برتقالي",
+        "قرفة"
+      ],
+      "heart": [
+        "عود",
+        "رائحة شجر"
+      ],
+      "base": [
+        "عنبر",
+        "مسك",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
@@ -702,11 +1090,23 @@
     "description": "جرعة شرقية مفعمة بالرمان وتوابل لطيفة في قاع عطري دافئ.",
     "fragranceFamily": "فاكهية",
     "notes": {
-      "top": ["رمان", "ليمون"],
-      "heart": ["بهار", "ورد"],
-      "base": ["مسك", "صندل"]
+      "top": [
+        "رمان",
+        "ليمون"
+      ],
+      "heart": [
+        "بهار",
+        "ورد"
+      ],
+      "base": [
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["50ml", "75ml"],
+    "volumes": [
+      "50ml",
+      "75ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -723,11 +1123,24 @@
     "description": "صياغة فاخرة من الصندل والعود مع رائحة دافئة مستدامة.",
     "fragranceFamily": "خشبي",
     "notes": {
-      "top": ["عطر مائي", "ليمون"],
-      "heart": ["صندل", "عود"],
-      "base": ["مسك", "عنبر", "خشب"]
+      "top": [
+        "عطر مائي",
+        "ليمون"
+      ],
+      "heart": [
+        "صندل",
+        "عود"
+      ],
+      "base": [
+        "مسك",
+        "عنبر",
+        "خشب"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -744,11 +1157,24 @@
     "description": "عطر شرقي هادئ يفتح مخزون البخور والعود علناً في لحظة.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["ليمون", "قرفة"],
-      "heart": ["عود", "بخور"],
-      "base": ["مسك", "صندل", "عنبر"]
+      "top": [
+        "ليمون",
+        "قرفة"
+      ],
+      "heart": [
+        "عود",
+        "بخور"
+      ],
+      "base": [
+        "مسك",
+        "صندل",
+        "عنبر"
+      ]
     },
-    "volumes": ["50ml", "100ml"],
+    "volumes": [
+      "50ml",
+      "100ml"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -765,11 +1191,22 @@
     "description": "مجموعة عينة بخيارات خشبية وزهرية ومائية للتمتع بتجربة متنوعة.",
     "fragranceFamily": "مزيج",
     "notes": {
-      "top": ["برتقال", "ليمون"],
-      "heart": ["ورد", "سافران"],
-      "base": ["مسك", "صندل"]
+      "top": [
+        "برتقال",
+        "ليمون"
+      ],
+      "heart": [
+        "ورد",
+        "سافران"
+      ],
+      "base": [
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -786,11 +1223,22 @@
     "description": "عينة اختبار عطر مع رائحة فاخرة مناسبة لاختياري اليومي.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["فاكهة", "ليمون"],
-      "heart": ["ورد", "بنفسج"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "فاكهة",
+        "ليمون"
+      ],
+      "heart": [
+        "ورد",
+        "بنفسج"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -807,11 +1255,22 @@
     "description": "عينة منعشة تعتمد على حمضيات متنوعة ومثالية للاستكشاف السريع.",
     "fragranceFamily": "حمضي",
     "notes": {
-      "top": ["ليمون", "برتقال"],
-      "heart": ["يوسفي", "نعناع"],
-      "base": ["شيكور", "خشب"]
+      "top": [
+        "ليمون",
+        "برتقال"
+      ],
+      "heart": [
+        "يوسفي",
+        "نعناع"
+      ],
+      "base": [
+        "شيكور",
+        "خشب"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -828,11 +1287,22 @@
     "description": "عينة لتجربة الخشب والسلول مع لمسات من المسك والفاينلا.",
     "fragranceFamily": "خشبي",
     "notes": {
-      "top": ["أوكالبتوس", "برتقال"],
-      "heart": ["صندل", "خشب"],
-      "base": ["مسك", "فانيليا"]
+      "top": [
+        "أوكالبتوس",
+        "برتقال"
+      ],
+      "heart": [
+        "صندل",
+        "خشب"
+      ],
+      "base": [
+        "مسك",
+        "فانيليا"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -849,11 +1319,22 @@
     "description": "مجموعة صغيرة تستعرض الزهور والفانيليا في أسلوب أنثوي جديد.",
     "fragranceFamily": "زهرية",
     "notes": {
-      "top": ["رمان", "مشمش"],
-      "heart": ["ورد", "ياسمين"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "رمان",
+        "مشمش"
+      ],
+      "heart": [
+        "ورد",
+        "ياسمين"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
@@ -870,11 +1351,22 @@
     "description": "عينة سريعة لكشف طبقات العود مع لمسة دافئة من البخور.",
     "fragranceFamily": "عودي",
     "notes": {
-      "top": ["دخان", "برتقالي"],
-      "heart": ["عود", "مشمش"],
-      "base": ["مسك", "خشب"]
+      "top": [
+        "دخان",
+        "برتقالي"
+      ],
+      "heart": [
+        "عود",
+        "مشمش"
+      ],
+      "base": [
+        "مسك",
+        "خشب"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -891,11 +1383,22 @@
     "description": "مجموعه تجريبية بارزة وتوفر لمسات برتقالية وزهرية.",
     "fragranceFamily": "مزيج",
     "notes": {
-      "top": ["ليمون", "برتقال"],
-      "heart": ["ورد", "زنبق"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "ليمون",
+        "برتقال"
+      ],
+      "heart": [
+        "ورد",
+        "زنبق"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -912,11 +1415,22 @@
     "description": "رائحة عينيه مثالية للمناسبات، مع الأجواء الليلية والخشب اللطيف.",
     "fragranceFamily": "دخاني",
     "notes": {
-      "top": ["ليمون", "بخور"],
-      "heart": ["خشب", "رائحة عطرية"],
-      "base": ["مسك", "صندل"]
+      "top": [
+        "ليمون",
+        "بخور"
+      ],
+      "heart": [
+        "خشب",
+        "رائحة عطرية"
+      ],
+      "base": [
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
@@ -933,11 +1447,22 @@
     "description": "عينة تستكشف القوام الناعم مع رائحة الفانيليا والوردة.",
     "fragranceFamily": "فانيليا",
     "notes": {
-      "top": ["فاكهة", "برتقالي"],
-      "heart": ["ورد", "فانيليا"],
-      "base": ["مسك", "صندل"]
+      "top": [
+        "فاكهة",
+        "برتقالي"
+      ],
+      "heart": [
+        "ورد",
+        "فانيليا"
+      ],
+      "base": [
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
@@ -954,11 +1479,22 @@
     "description": "تجربة رملية الفاكهة مع خفة الحشرات الخفيفة في القاعدة.",
     "fragranceFamily": "شرقي",
     "notes": {
-      "top": ["ليمون", "فلفل"],
-      "heart": ["رمل", "قرفة"],
-      "base": ["عود", "مسك"]
+      "top": [
+        "ليمون",
+        "فلفل"
+      ],
+      "heart": [
+        "رمل",
+        "قرفة"
+      ],
+      "base": [
+        "عود",
+        "مسك"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
@@ -975,11 +1511,22 @@
     "description": "عينة سهلة للبدء وجمع النغمات الزهرية والفاكهية.",
     "fragranceFamily": "زهري",
     "notes": {
-      "top": ["برتقالي", "توت"],
-      "heart": ["ورد", "خزامى"],
-      "base": ["فانيليا", "مسك"]
+      "top": [
+        "برتقالي",
+        "توت"
+      ],
+      "heart": [
+        "ورد",
+        "خزامى"
+      ],
+      "base": [
+        "فانيليا",
+        "مسك"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80"
@@ -996,36 +1543,26 @@
     "description": "علبة تجريبية فاخره تجمع أكثر من عطر من كل فئة مختارة بعناية.",
     "fragranceFamily": "مزيج",
     "notes": {
-      "top": ["ليمون", "برتقال"],
-      "heart": ["ورد", "عود"],
-      "base": ["مسك", "صندل"]
+      "top": [
+        "ليمون",
+        "برتقال"
+      ],
+      "heart": [
+        "ورد",
+        "عود"
+      ],
+      "base": [
+        "مسك",
+        "صندل"
+      ]
     },
-    "volumes": ["Sample"],
+    "volumes": [
+      "Sample"
+    ],
     "images": [
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
     ],
     "bestseller": true
-  },
-  {
-    "id": "admin-001",
-    "name": "إضافة من الأدمن",
-    "brand": "Hoor Admin",
-    "category": "special",
-    "price": 999,
-    "rating": 5.0,
-    "description": "هذا منتج تمت إضافته يدوياً عبر حساب الأدمن للاختبار — عطر نموذجي لعرض لوحة التحكم ووظائف CRUD.",
-    "fragranceFamily": "شرقي",
-    "notes": {
-      "top": ["برغموت", "كافور"],
-      "heart": ["زعفران", "ورد"],
-      "base": ["عود", "مسك"]
-    },
-    "volumes": ["100ml"],
-    "images": [
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
-    ],
-    "bestseller": false
   }
 ]

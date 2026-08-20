@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createOrder } from '../../../../../lib/orders';
-import { getCurrentUserFromRequest, isAdminUser } from '../../../../../lib/auth';
-import { broadcastEvent } from '../../../../../lib/events';
+import { createOrder } from '../../../../lib/orders';
+import { getCurrentUserFromRequest, isAdminUser } from '../../../../lib/auth';
+import { broadcastEvent } from '../../../../lib/events';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    // expect body: fullName, phone, city, address, items, total, paymentMethod, status
     if (!body) return NextResponse.json({ message: 'Invalid body' }, { status: 400 });
 
     const created = await createOrder({

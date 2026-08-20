@@ -1,4 +1,4 @@
-﻿import fs from 'fs/promises';
+import fs from 'fs/promises';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUserFromRequest, isAdminUser } from '../../../../../lib/auth';
@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
         const filePath = path.join(uploadsDir, unique);
         const buffer = Buffer.from(await value.arrayBuffer());
         await fs.writeFile(filePath, buffer);
-        // Return URL path relative to public
         const urlPath = `/uploads/${unique}`;
         urls.push(urlPath);
       }

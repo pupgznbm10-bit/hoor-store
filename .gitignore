@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+.tmp/
+.vscode/
+public/uploads/
 
 # debug
 npm-debug.log*

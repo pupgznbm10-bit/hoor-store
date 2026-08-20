@@ -22,24 +22,29 @@ export default function ProductsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch('/api/products');
+        const res = await fetch('/api/products', { cache: 'force-cache' });
         const data = await res.json();
-        const prods = data.products || [];
+        const prods = Array.isArray(data.products) ? data.products : [];
         setAllProducts(prods);
-        // derive families and notes
+
         const famSet = new Set<string>();
         const noteSet = new Set<string>();
         prods.forEach((p: any) => {
           if (p.fragranceFamily) famSet.add(p.fragranceFamily);
           if (Array.isArray(p.tags)) p.tags.forEach((t: string) => noteSet.add(t));
-          if (p.notes && typeof p.notes === 'object') Object.values(p.notes).forEach((arr: string[]) => arr.forEach((t) => noteSet.add(t)));
+          if (p.notes && typeof p.notes === 'object') {
+            const noteGroups = Object.values(p.notes) as string[][];
+            noteGroups.forEach((arr) => arr.forEach((t) => noteSet.add(t)));
+          }
         });
+
         setFamilies(Array.from(famSet));
         setNotes(Array.from(noteSet));
       } catch (err) {
         console.error('failed to load products', err);
       }
     }
+
     load();
     const handler = () => load();
     window.addEventListener('products:updated', handler);
@@ -47,28 +52,32 @@ export default function ProductsPage() {
   }, []);
 
   const filtered = useMemo(() => {
-    return ALL_PRODUCTS.filter((p) => {
-      const searchTarget = `${p.name ?? p.name_ar ?? ''} ${p.name_en ?? ''}`.toLowerCase();
-      const noteValues = Array.isArray(p.tags)
-        ? p.tags
-        : Object.values(p.notes ?? {}).flat();
+    const q = query.trim().toLowerCase();
 
-      if (query && !searchTarget.includes(query.toLowerCase())) return false;
-      if (selectedFamilies.length && !selectedFamilies.includes(p.fragranceFamily ?? '')) return false;
-      if (selectedNotes.length && !selectedNotes.some((n) => noteValues.includes(n))) return false;
-      if (selectedVolumes.length && !selectedVolumes.some((v) => (p.volumes ?? []).includes(v))) return false;
-      if (p.price < priceRange[0] || p.price > priceRange[1]) return false;
-      return true;
-    }).sort((a, b) => {
-      switch (sortBy) {
-        case 'الأعلى سعراً':
-          return b.price - a.price;
-        case 'الأقل سعراً':
-          return a.price - b.price;
-        default:
-          return 0;
-      }
-    });
+    return [...ALL_PRODUCTS]
+      .filter((p) => {
+        const searchTarget = `${p.name ?? p.name_ar ?? ''} ${p.name_en ?? ''}`.toLowerCase();
+        const noteValues = Array.isArray(p.tags)
+          ? (p.tags as string[])
+          : (Object.values(p.notes ?? {}).flat() as string[]);
+
+        if (q && !searchTarget.includes(q)) return false;
+        if (selectedFamilies.length && !selectedFamilies.includes(p.fragranceFamily ?? '')) return false;
+        if (selectedNotes.length && !selectedNotes.some((n) => noteValues.includes(n))) return false;
+        if (selectedVolumes.length && !selectedVolumes.some((v) => (p.volumes ?? []).includes(v))) return false;
+        if (p.price < priceRange[0] || p.price > priceRange[1]) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case 'الأعلى سعراً':
+            return Number(b.price || 0) - Number(a.price || 0);
+          case 'الأقل سعراً':
+            return Number(a.price || 0) - Number(b.price || 0);
+          default:
+            return 0;
+        }
+      });
   }, [ALL_PRODUCTS, query, selectedFamilies, selectedNotes, selectedVolumes, priceRange, sortBy]);
 
   return (

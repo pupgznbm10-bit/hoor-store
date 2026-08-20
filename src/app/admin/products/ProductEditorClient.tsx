@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 
 type NoteSections = { [section: string]: string[] };
@@ -30,9 +31,10 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
   const [uploadLoading, setUploadLoading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
+  const inputClass = 'w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-amber-400 focus:ring-4 focus:ring-amber-100';
+
   useEffect(() => {
     setForm(product || { name: '', brand: '', price: 0, description: '', fragranceFamily: '', notes: {}, images: [], bestseller: false });
-    // populate tags from product.notes or product.tags
     const t: string[] = [];
     if (product) {
       if (Array.isArray(product.tags)) t.push(...product.tags);
@@ -42,7 +44,6 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
   }, [product]);
 
   useEffect(() => {
-    // load existing categories/tags for datalist
     (async () => {
       try {
         const res = await fetch('/api/products/meta');
@@ -87,7 +88,6 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
     });
   }
 
-  // tags management (simple free-form tags)
   function addTagFromInput(val?: string) {
     const v = (val || newNoteVal || '').trim();
     if (!v) return;
@@ -107,10 +107,9 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
         setLoading(false);
         return;
       }
-      // prepare payload: convert tags to product.tags and keep notes
+
       const payload: any = { ...form };
       if (tags && tags.length) payload.tags = tags;
-      // if discountPrice is empty string convert to number or undefined
       if (payload.discountPrice === '') payload.discountPrice = undefined;
 
       const method = form.id ? 'PUT' : 'POST';
@@ -146,101 +145,144 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
   }
 
   return (
-    <div>
-      <h2 className="text-lg font-semibold mb-2">{form.id ? 'تعديل المنتج' : 'إضافة منتج جديد'}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <input className="border p-2" placeholder="اسم العطر" value={form.name || ''} onChange={(e) => update('name', e.target.value)} />
-        <input className="border p-2" placeholder="الماركة" value={form.brand || ''} onChange={(e) => update('brand', e.target.value)} />
-        <input type="number" className="border p-2" placeholder="السعر" value={form.price as any || 0} onChange={(e) => update('price', Number(e.target.value))} />
-        <input type="number" className="border p-2" placeholder="سعر الخصم (اختياري)" value={(form as any).discountPrice as any || ''} onChange={(e) => update('discountPrice' as any, e.target.value === '' ? '' : Number(e.target.value))} />
-        <div>
-          <input list="category-list" className="border p-2 w-full" placeholder="فئة/تصنيف أو اكتب جديدة" value={form.category || ''} onChange={(e) => update('category', e.target.value)} />
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-700">اسم العطر</label>
+          <input className={inputClass} placeholder="اسم العطر" value={form.name || ''} onChange={(e) => update('name', e.target.value)} />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-700">الماركة</label>
+          <input className={inputClass} placeholder="الماركة" value={form.brand || ''} onChange={(e) => update('brand', e.target.value)} />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-700">السعر</label>
+          <input type="number" className={inputClass} placeholder="السعر" value={form.price as any || 0} onChange={(e) => update('price', Number(e.target.value))} />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-bold text-slate-700">السعر قبل الخصم</label>
+          <input type="number" className={inputClass} placeholder="سعر الخصم (اختياري)" value={(form as any).discountPrice as any || ''} onChange={(e) => update('discountPrice' as any, e.target.value === '' ? '' : Number(e.target.value))} />
+        </div>
+
+        <div className="space-y-2 md:col-span-2">
+          <label className="text-sm font-bold text-slate-700">الفئة / التصنيف</label>
+          <input list="category-list" className={inputClass} placeholder="فئة/تصنيف أو اكتب جديدة" value={form.category || ''} onChange={(e) => update('category', e.target.value)} />
           <datalist id="category-list">
             {categoryOptions.map((c) => <option key={c} value={c} />)}
           </datalist>
         </div>
-        <textarea className="border p-2 col-span-1 md:col-span-2" placeholder="الوصف" value={form.description || ''} onChange={(e) => update('description', e.target.value)} />
+
+        <div className="space-y-2 md:col-span-2">
+          <label className="text-sm font-bold text-slate-700">وصف المنتج</label>
+          <textarea rows={4} className={`${inputClass} resize-none`} placeholder="اكتب وصف المنتج هنا..." value={form.description || ''} onChange={(e) => update('description', e.target.value)} />
+        </div>
       </div>
 
-      <div className="mt-4">
-        <h3 className="font-semibold">الصور</h3>
-        <div className="flex gap-2 items-center mt-2">
-          <input placeholder="رابط الصورة (URL)" className="border p-2 flex-1" id="img-url" />
-          <button onClick={() => { const el = document.getElementById('img-url') as HTMLInputElement; addImage(el?.value || ''); if (el) el.value=''; }} className="px-3 py-1 bg-green-500 text-white rounded">إضافة</button>
+      <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="text-lg font-black text-slate-900">الصور</h3>
+          <span className="text-xs font-bold text-slate-500">{(form.images || []).length} صورة</span>
         </div>
 
-        <div className="flex gap-2 items-center mt-3">
-        <div
-          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-          onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
-          onDrop={async (e) => {
-            e.preventDefault();
-            setDragOver(false);
-            const files = e.dataTransfer?.files;
-            if (!files || files.length === 0) return;
-            await handleFilesUpload(files);
-          }}
-          className={`flex-1 p-3 border rounded cursor-pointer ${dragOver ? 'bg-gray-50 border-dashed border-2 border-indigo-300' : ''}`}
-        >
-          اسحب وافلِت الصور هنا أو اخترها
-          <input type="file" id="img-file" className="hidden" multiple onChange={async (e) => { const files = e.target.files; if (files) await handleFilesUpload(files); }} />
+        <div className="flex flex-col gap-3 md:flex-row">
+          <input placeholder="رابط الصورة (URL)" className={`${inputClass} flex-1`} id="img-url" />
+          <button
+            onClick={() => { const el = document.getElementById('img-url') as HTMLInputElement; addImage(el?.value || ''); if (el) el.value=''; }}
+            className="rounded-full bg-emerald-500 px-4 py-3 text-sm font-black text-white shadow-md transition hover:bg-emerald-600"
+          >
+            إضافة
+          </button>
         </div>
 
-        <button onClick={async () => {
-          const input = document.getElementById('img-file') as HTMLInputElement;
-          if (!input) return;
-          input.click();
-        }} className="px-3 py-1 bg-indigo-600 text-white rounded">اختر ملفات</button>
+        <div className="mt-4 flex flex-col gap-3 md:flex-row">
+          <div
+            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
+            onDrop={async (e) => {
+              e.preventDefault();
+              setDragOver(false);
+              const files = e.dataTransfer?.files;
+              if (!files || files.length === 0) return;
+              await handleFilesUpload(files);
+            }}
+            className={`flex-1 rounded-[22px] border-2 border-dashed p-5 text-center text-sm font-medium text-slate-500 transition ${dragOver ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-slate-50'}`}
+          >
+            اسحب وافلِت الصور هنا أو اخترها
+            <input type="file" id="img-file" className="hidden" multiple onChange={async (e) => { const files = e.target.files; if (files) await handleFilesUpload(files); }} />
+          </div>
+
+          <button
+            onClick={async () => {
+              const input = document.getElementById('img-file') as HTMLInputElement;
+              if (!input) return;
+              input.click();
+            }}
+            className="rounded-full bg-slate-900 px-4 py-3 text-sm font-black text-white shadow-md transition hover:bg-slate-800"
+          >
+            اختر ملفات
+          </button>
         </div>
 
-        <div className="mt-2">
-        {uploadLoading && <div className="text-sm text-indigo-600">جاري رفع الصور...</div>}
-        </div>
+        {uploadLoading && <div className="mt-3 text-sm font-medium text-amber-600">جاري رفع الصور...</div>}
 
-        <div className="mt-2 flex gap-2 flex-wrap">
+        <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
           {(form.images || []).map((im, i) => (
-            <div key={i} className="w-36 border p-1 rounded shadow-sm">
-              <div className="w-full h-24 bg-gray-50 rounded overflow-hidden flex items-center justify-center">
-                <img src={im} className="max-h-24" />
+            <div key={i} className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-sm">
+              <div className="h-24 overflow-hidden rounded-xl bg-white">
+                <img src={im} alt="product" className="h-full w-full object-cover" />
               </div>
-              <div className="flex justify-between mt-1 items-center">
-                <button onClick={() => removeImage(i)} className="text-xs text-red-600">حذف</button>
-                <a href={im} target="_blank" rel="noreferrer" className="text-xs">فتح</a>
+              <div className="mt-2 flex items-center justify-between">
+                <button onClick={() => removeImage(i)} className="text-xs font-bold text-red-500">حذف</button>
+                <a href={im} target="_blank" rel="noreferrer" className="text-xs font-bold text-slate-600">فتح</a>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="mt-4">
-        <h3 className="font-semibold">نغمات العطر (notes)</h3>
-        <div className="flex gap-2 mt-2">
-          <input placeholder="أضف نغمة واضغط Enter أو ," className="border p-2 flex-1" value={newNoteVal} onChange={(e) => setNewNoteVal(e.target.value)} onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTagFromInput(); }
-          }} />
-          <button onClick={() => addTagFromInput()} className="px-3 py-1 bg-green-600 text-white rounded">أضف</button>
+      <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
+        <h3 className="text-lg font-black text-slate-900">نغمات العطر</h3>
+
+        <div className="mt-4 flex flex-col gap-3 md:flex-row">
+          <input
+            placeholder="أضف نغمة واضغط Enter أو ,"
+            className={`${inputClass} flex-1`}
+            value={newNoteVal}
+            onChange={(e) => setNewNoteVal(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTagFromInput(); }
+            }}
+          />
+          <button onClick={() => addTagFromInput()} className="rounded-full bg-emerald-500 px-4 py-3 text-sm font-black text-white shadow-md transition hover:bg-emerald-600">أضف</button>
         </div>
 
-        <div className="mt-2">
+        <div className="mt-4 space-y-4">
           {tags.length > 0 && (
-            <div className="flex gap-2 flex-wrap">
-              {tags.map((t, i) => (
-                <div key={i} className="bg-gray-100 px-2 py-1 rounded flex items-center gap-2">
-                  <span>{t}</span>
-                  <button className="text-red-500 text-xs" onClick={() => removeTag(i)}>x</button>
-                </div>
-              ))}
+            <div>
+              <div className="mb-2 text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">Tags</div>
+              <div className="flex flex-wrap gap-2">
+                {tags.map((t, i) => (
+                  <span key={i} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-700">
+                    {t}
+                    <button className="text-xs font-bold text-red-500" onClick={() => removeTag(i)}>x</button>
+                  </span>
+                ))}
+              </div>
             </div>
           )}
+
           {Object.entries(form.notes || {}).map(([section, arr]) => (
-            <div key={section} className="mt-2">
-              <div className="font-semibold">{section}</div>
-              <div className="flex gap-2 mt-1 flex-wrap">
+            <div key={section}>
+              <div className="mb-2 text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">{section}</div>
+              <div className="flex flex-wrap gap-2">
                 {arr.map((n, i) => (
-                  <div key={i} className="bg-gray-100 px-2 py-1 rounded flex items-center gap-2">
-                    <span>{n}</span>
-                    <button className="text-red-500 text-xs" onClick={() => removeNote(section, i)}>x</button>
-                  </div>
+                  <span key={i} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-700">
+                    {n}
+                    <button className="text-xs font-bold text-red-500" onClick={() => removeNote(section, i)}>x</button>
+                  </span>
                 ))}
               </div>
             </div>
@@ -248,13 +290,20 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-3">
-        <label className="flex items-center gap-2"><input type="checkbox" checked={!!form.bestseller} onChange={(e) => update('bestseller', e.target.checked)} /> Bestseller</label>
+      <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
+        <label className="inline-flex items-center gap-3 text-sm font-bold text-slate-700">
+          <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-amber-500" checked={!!form.bestseller} onChange={(e) => update('bestseller', e.target.checked)} />
+          Bestseller
+        </label>
       </div>
 
-      <div className="mt-4 flex gap-2">
-        <button onClick={save} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded">{loading ? 'جاري الحفظ...' : 'حفظ'}</button>
-        <button onClick={onCancel} className="px-4 py-2 border rounded">إلغاء</button>
+      <div className="sticky bottom-0 z-10 mt-3 rounded-[22px] border border-slate-200 bg-white/90 p-3 shadow-[0_-10px_25px_rgba(15,23,42,0.05)] backdrop-blur-sm">
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+          <button onClick={onCancel} className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-50">إلغاء</button>
+          <button onClick={save} disabled={loading} className="rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 px-6 py-3 text-sm font-black text-slate-900 shadow-[0_12px_25px_rgba(245,158,11,0.35)] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70">
+            {loading ? 'جاري الحفظ...' : 'حفظ المنتج'}
+          </button>
+        </div>
       </div>
     </div>
   );
