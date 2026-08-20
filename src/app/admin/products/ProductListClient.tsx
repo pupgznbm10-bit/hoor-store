@@ -13,12 +13,16 @@ type Product = {
 };
 
 import ProductEditorClient from './ProductEditorClient';
+import ConfirmModal from '../../../components/ConfirmModal';
+import DraggableModal from '../../../components/DraggableModal';
 
 export default function ProductListClient() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
   const [showEditor, setShowEditor] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [toDelete, setToDelete] = useState<string | null>(null);
 
   async function fetchProducts() {
     setLoading(true);
@@ -48,12 +52,9 @@ export default function ProductListClient() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('هل أنت متأكد من حذف المنتج؟')) return;
-    const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
-    if (!res.ok) alert('حدث خطأ أثناء الحذف');
-    setProducts((s) => s.filter((x) => x.id !== id));
-    // notify other parts of the app that products changed
-    try { window.dispatchEvent(new CustomEvent('products:updated')); } catch(e){}
+    // open confirm modal
+    setToDelete(id);
+    setConfirmOpen(true);
   }
 
   async function onSaved(prod: Product, created = false) {
@@ -63,6 +64,17 @@ export default function ProductListClient() {
     } else {
       setProducts((s) => s.map((p) => (p.id === prod.id ? prod : p)));
     }
+    try { window.dispatchEvent(new CustomEvent('products:updated')); } catch(e){}
+  }
+
+  async function doConfirmDelete() {
+    if (!toDelete) return;
+    const id = toDelete;
+    setConfirmOpen(false);
+    setToDelete(null);
+    const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+    if (!res.ok) return alert('حدث خطأ أثناء الحذف');
+    setProducts((s) => s.filter((x) => x.id !== id));
     try { window.dispatchEvent(new CustomEvent('products:updated')); } catch(e){}
   }
 
@@ -93,13 +105,21 @@ export default function ProductListClient() {
       </div>
 
       {showEditor && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-          <div className="bg-white w-full max-w-3xl p-4 rounded shadow-lg">
-            <button className="float-left text-sm" onClick={() => setShowEditor(false)}>إلغاء</button>
-            <ProductEditorClient product={editing} onSaved={onSaved} onCancel={() => setShowEditor(false)} />
+        <DraggableModal onClose={() => setShowEditor(false)}>
+          <div className="p-2 flex justify-end">
+            <button className="text-sm" onClick={() => setShowEditor(false)}>إلغاء</button>
           </div>
-        </div>
+          <ProductEditorClient product={editing} onSaved={onSaved} onCancel={() => setShowEditor(false)} />
+        </DraggableModal>
       )}
+
+      <ConfirmModal
+        open={confirmOpen}
+        title="تأكيد حذف المنتج"
+        description="هل أنت متأكد أنك تريد حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء."
+        onCancel={() => { setConfirmOpen(false); setToDelete(null); }}
+        onConfirm={doConfirmDelete}
+      />
     </div>
   );
 }

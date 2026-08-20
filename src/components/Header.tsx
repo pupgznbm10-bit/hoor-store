@@ -13,13 +13,14 @@ import { useAuth } from '../context/AuthContext';
  * Contains: announcement bar, glassmorphic sticky navbar, live search, action icons.
  */
 
-const categories = [
-  { label: 'عطور رجالية', href: '/category/men' },
-  { label: 'عطور نسائية', href: '/category/women' },
-  { label: 'عطور شرقية وعود', href: '/category/oriental' },
-  { label: 'عينات وتجارب', href: '/category/samples' },
-  { label: 'الأكثر مبيعاً', href: '/category/bestsellers' },
-];
+const defaultMap: Record<string, string> = {
+  men: 'عطور رجالية',
+  women: 'عطور نسائية',
+  oriental: 'عطور شرقية وعود',
+  samples: 'عينات وتجارب',
+  bestsellers: 'الأكثر مبيعاً',
+};
+
 
 export default function Header() {
   const { wishlist } = useStore();
@@ -29,6 +30,56 @@ export default function Header() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [categories, setCategories] = useState<{ label: string; href: string }[]>(
+    Object.keys(defaultMap).map((k) => ({ label: defaultMap[k], href: `/category/${encodeURIComponent(k)}` }))
+  );
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadMeta() {
+      try {
+        const res = await fetch('/api/products/meta');
+        const data = await res.json();
+        const cats: string[] = data.categories || [];
+        const mapped = cats.map((c: string) => ({ label: defaultMap[c] || c, href: `/category/${encodeURIComponent(c)}` }));
+        if (mounted && mapped.length) setCategories(mapped);
+      } catch (err) {
+        // keep defaults
+        console.error('failed to load categories meta', err);
+      }
+    }
+    loadMeta();
+    const handler = () => loadMeta();
+    window.addEventListener('products:updated', handler);
+
+    // SSE fallback: connect to server-sent events and re-dispatch as window events
+    let es: EventSource | null = null;
+    try {
+      if (typeof window !== 'undefined' && 'EventSource' in window) {
+        es = new EventSource('/api/products?sse=1');
+        es.onmessage = (e) => {
+          try {
+            const parsed = JSON.parse(e.data);
+            if (parsed && parsed.type) {
+              window.dispatchEvent(new CustomEvent(parsed.type, { detail: parsed.payload }));
+            }
+          } catch (err) {
+            // ignore
+          }
+        };
+        es.onerror = () => {
+          // close and cleanup on error
+          try { es && es.close(); } catch(e){}
+          es = null;
+        };
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    return () => { mounted = false; window.removeEventListener('products:updated', handler); if (es) try { es.close(); } catch(e){} };
+  }, []);
 
   // Simulated suggestions. Replace with live API later.
   useEffect(() => {

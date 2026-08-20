@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import ProductCard from '../../components/ProductCard';
 import CartDrawer from '../../components/CartDrawer';
-import products from '../../data/products.json';
 import { useCart } from '../../context/CartContext';
 
-const ALL_PRODUCTS = products as any[];
-
 export default function ProductsPage() {
+  const [ALL_PRODUCTS, setAllProducts] = useState<any[]>([]);
   const [query, setQuery] = useState('');
   const [selectedFamilies, setSelectedFamilies] = useState<string[]>([]);
   const [selectedNotes, setSelectedNotes] = useState<string[]>([]);
@@ -17,15 +15,42 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState('الأحدث');
   const { isCartOpen } = useCart();
 
-  const families = ['خشبي', 'عودي', 'زهري', 'حمضي', 'فاكهي', 'مائي'];
-  const notes = ['عود', 'مسك', 'عنبر', 'وردة', 'فانيليا', 'ليمون', 'مشمش'];
-  const volumes = ['50ml', '100ml', '75ml', 'Sample'];
+  const [families, setFamilies] = useState<string[]>([]);
+  const [notes, setNotes] = useState<string[]>([]);
+  const [volumes, setVolumes] = useState<string[]>(['50ml', '100ml', '75ml', 'Sample']);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        const prods = data.products || [];
+        setAllProducts(prods);
+        // derive families and notes
+        const famSet = new Set<string>();
+        const noteSet = new Set<string>();
+        prods.forEach((p: any) => {
+          if (p.fragranceFamily) famSet.add(p.fragranceFamily);
+          if (Array.isArray(p.tags)) p.tags.forEach((t: string) => noteSet.add(t));
+          if (p.notes && typeof p.notes === 'object') Object.values(p.notes).forEach((arr: string[]) => arr.forEach((t) => noteSet.add(t)));
+        });
+        setFamilies(Array.from(famSet));
+        setNotes(Array.from(noteSet));
+      } catch (err) {
+        console.error('failed to load products', err);
+      }
+    }
+    load();
+    const handler = () => load();
+    window.addEventListener('products:updated', handler);
+    return () => window.removeEventListener('products:updated', handler);
+  }, []);
 
   const filtered = useMemo(() => {
     return ALL_PRODUCTS.filter((p) => {
       const searchTarget = `${p.name ?? p.name_ar ?? ''} ${p.name_en ?? ''}`.toLowerCase();
-      const noteValues = Array.isArray(p.notes)
-        ? p.notes
+      const noteValues = Array.isArray(p.tags)
+        ? p.tags
         : Object.values(p.notes ?? {}).flat();
 
       if (query && !searchTarget.includes(query.toLowerCase())) return false;
@@ -44,7 +69,7 @@ export default function ProductsPage() {
           return 0;
       }
     });
-  }, [query, selectedFamilies, selectedNotes, selectedVolumes, priceRange, sortBy]);
+  }, [ALL_PRODUCTS, query, selectedFamilies, selectedNotes, selectedVolumes, priceRange, sortBy]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">

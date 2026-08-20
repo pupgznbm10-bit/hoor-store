@@ -1006,5 +1006,26 @@
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
     ],
     "bestseller": true
+  },
+  {
+    "id": "admin-001",
+    "name": "إضافة من الأدمن",
+    "brand": "Hoor Admin",
+    "category": "special",
+    "price": 999,
+    "rating": 5.0,
+    "description": "هذا منتج تمت إضافته يدوياً عبر حساب الأدمن للاختبار — عطر نموذجي لعرض لوحة التحكم ووظائف CRUD.",
+    "fragranceFamily": "شرقي",
+    "notes": {
+      "top": ["برغموت", "كافور"],
+      "heart": ["زعفران", "ورد"],
+      "base": ["عود", "مسك"]
+    },
+    "volumes": ["100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
   }
 ]

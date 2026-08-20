@@ -1,8 +1,15 @@
 ﻿import fs from 'fs/promises';
 import path from 'path';
+import { NextRequest, NextResponse } from 'next/server';
+import { getCurrentUserFromRequest, isAdminUser } from '../../../../../lib/auth';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    const user = await getCurrentUserFromRequest(request);
+    if (!user || !isAdminUser(user)) {
+      return NextResponse.json({ message: 'غير مصرح' }, { status: 403 });
+    }
+
     const formData = await request.formData();
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
     await fs.mkdir(uploadsDir, { recursive: true });
@@ -22,9 +29,9 @@ export async function POST(request: Request) {
       }
     }
 
-    return new Response(JSON.stringify({ urls }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    return NextResponse.json({ urls });
   } catch (err) {
     console.error('upload error', err);
-    return new Response(JSON.stringify({ message: 'خطأ في رفع الملف' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    return NextResponse.json({ message: 'خطأ في رفع الملف' }, { status: 500 });
   }
 }

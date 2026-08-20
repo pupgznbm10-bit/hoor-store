@@ -6,7 +6,8 @@
     "phone": "01551687704",
     "passwordHash": "$2b$10$hpKQjn9KxGnVENQVGvWLhux2MVfJM0WJAtv7QSpN1ovUHz9T8VYdK",
     "createdAt": "2026-08-19T22:37:53.804Z",
-    "isVerified": true
+    "isVerified": true,
+    "role": "user"
   },
   {
     "id": "u_admin_20260820",
@@ -15,6 +16,7 @@
     "phone": "",
     "passwordHash": "$2b$10$kPB/NNeT6grK2AS6rtXu0uwfESFiiUJUaUgzRB4Ib7QvnspljUckW",
     "createdAt": "2026-08-20T02:43:00.000Z",
-    "isVerified": true
+    "isVerified": true,
+    "role": "admin"
   }
 ]

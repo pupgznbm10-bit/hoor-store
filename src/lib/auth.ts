@@ -14,6 +14,8 @@ export type UserRecord = {
   passwordHash: string;
   createdAt: string;
   isVerified?: boolean;
+  // role: 'user' | 'admin'
+  role?: string;
 };
 
 export type SafeUser = Omit<UserRecord, 'passwordHash'>;
@@ -25,6 +27,13 @@ export const ADMIN_EMAIL = 'mw01551687704@gmail.com';
 
 export function isAdminEmail(email?: string | null) {
   return !!email && email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+
+export function isAdminUser(user?: SafeUser | null) {
+  if (!user) return false;
+  // prefer explicit role, fallback to old email check for backward compatibility
+  if (user.role) return String(user.role).toLowerCase() === 'admin';
+  return isAdminEmail(user.email);
 }
 
 async function ensureDataFile() {
@@ -51,6 +60,10 @@ export async function writeUsers(users: UserRecord[]) {
 
 export function sanitizeUser(user: UserRecord): SafeUser {
   const { passwordHash, ...safeUser } = user;
+  // ensure role exists on safeUser for client/server checks
+  if (!('role' in safeUser)) {
+    (safeUser as any).role = 'user';
+  }
   return safeUser;
 }
 
@@ -72,12 +85,14 @@ export async function createUserRecord(input: {
   city?: string;
   address?: string;
   password: string;
+  role?: string;
 }) {
   const fullName = input.fullName.trim();
   const email = input.email.trim().toLowerCase();
   const phone = input.phone.trim();
   const city = String(input.city || '').trim();
   const address = String(input.address || '').trim();
+  const role = String(input.role || 'user').trim();
 
   if (!fullName || !email || !phone || !input.password) {
     throw new Error('All fields are required.');
@@ -99,6 +114,7 @@ export async function createUserRecord(input: {
     passwordHash,
     createdAt: new Date().toISOString(),
     isVerified: false,
+    role: role || 'user',
   };
 
   const users = await readUsers();

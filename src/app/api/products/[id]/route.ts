@@ -1,39 +1,48 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { readProducts, updateProduct, deleteProduct } from '../../../../lib/products';
+import { getCurrentUserFromRequest, isAdminUser } from '../../../../lib/auth';
+import { broadcastEvent } from '../../../../lib/events';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const products = await readProducts();
     const p = products.find((x) => x.id === id);
-    if (!p) return NextResponse.json({ message: 'ÇáãäÊÌ ÛíÑ ãæÌæÏ' }, { status: 404 });
+    if (!p) return NextResponse.json({ message: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½' }, { status: 404 });
     return NextResponse.json({ product: p });
   } catch (err) {
     console.error('products GET by id error', err);
-    return NextResponse.json({ message: 'ÎØÃ İí ÇáäÙÇã' }, { status: 500 });
+    return NextResponse.json({ message: 'ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' }, { status: 500 });
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const user = await getCurrentUserFromRequest(request);
+    if (!user || !isAdminUser(user)) return NextResponse.json({ message: 'ØºÙŠØ± Ù…ØµØ±Ø­' }, { status: 403 });
+    const { id } = await params;
     const body = await request.json();
     const updated = await updateProduct(id, body);
-    if (!updated) return NextResponse.json({ message: 'ÇáãäÊÌ ÛíÑ ãæÌæÏ' }, { status: 404 });
-    return NextResponse.json({ message: 'Êã ÇáÊÍÏíË', product: updated });
+    if (!updated) return NextResponse.json({ message: 'Ù„Ù… ÙŠØªÙ… Ø§Ù„Ø¹Ø«ÙˆØ± Ø¹Ù„Ù‰ Ø§Ù„Ù…Ù†ØªØ¬' }, { status: 404 });
+    // broadcast product update
+    try { await broadcastEvent({ type: 'products:updated', payload: { id } }); } catch(e){}
+    return NextResponse.json({ message: 'ØªÙ… Ø§Ù„ØªØ­Ø¯ÙŠØ«', product: updated });
   } catch (err) {
     console.error('products PUT error', err);
-    return NextResponse.json({ message: 'ÎØÃ İí ÇáäÙÇã' }, { status: 500 });
+    return NextResponse.json({ message: 'ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' }, { status: 500 });
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = params;
+    const user = await getCurrentUserFromRequest(request);
+    if (!user || !isAdminUser(user)) return NextResponse.json({ message: 'ØºÙŠØ± Ù…ØµØ±Ø­' }, { status: 403 });
+    const { id } = await params;
     await deleteProduct(id);
-    return NextResponse.json({ message: 'Êã ÇáÍĞİ' });
+    try { await broadcastEvent({ type: 'products:updated', payload: { id, action: 'deleted' } }); } catch (e) {}
+    return NextResponse.json({ message: 'ØªÙ… Ø§Ù„Ø­Ø°Ù' });
   } catch (err) {
     console.error('products DELETE error', err);
-    return NextResponse.json({ message: 'ÎØÃ İí ÇáäÙÇã' }, { status: 500 });
+    return NextResponse.json({ message: 'ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' }, { status: 500 });
   }
 }

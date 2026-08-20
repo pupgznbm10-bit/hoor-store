@@ -4,9 +4,6 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-const ADMIN_EMAIL = 'mw01551687704@gmail.com';
-const isAdminEmail = (email?: string | null) => !!email && email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
-
 type User = {
   id: string;
   fullName: string;
@@ -14,6 +11,7 @@ type User = {
   phone?: string;
   city?: string;
   address?: string;
+  role?: string;
   createdAt?: string;
 };
 
@@ -39,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const isAdmin = isAdminEmail(user?.email);
+  const isAdmin = !!user && String(user.role || '').toLowerCase() === 'admin';
 
   useEffect(() => {
     const fetchCurrentUser = async () => {

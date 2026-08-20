@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, PackageCheck, Truck, CheckCircle2, Wallet, ShoppingCart, TrendingUp } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import ProductListClient from './products/ProductListClient';
+import OrderCreatorClient from './OrderCreatorClient';
 
 const statusOptions = ['Pending', 'Shipped', 'Delivered'] as const;
 
@@ -30,6 +32,8 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [estimateMap, setEstimateMap] = useState<Record<string, string>>({});
+  const [activeTab, setActiveTab] = useState<'orders' | 'products'>('orders');
+  const [showCreateOrder, setShowCreateOrder] = useState(false);
 
   useEffect(() => {
     if (!authLoading && (!user || !isAdmin)) {
@@ -49,6 +53,16 @@ export default function AdminPage() {
       loadOrders();
     }
   }, [user, isAdmin]);
+
+  useEffect(() => {
+    const handler = () => {
+      // refresh data when orders or products updated
+      if (activeTab === 'orders' && user && isAdmin) loadOrders();
+    };
+    window.addEventListener('orders:updated', handler);
+    window.addEventListener('products:updated', handler);
+    return () => { window.removeEventListener('orders:updated', handler); window.removeEventListener('products:updated', handler); };
+  }, [activeTab, user, isAdmin]);
 
   const updateStatus = async (orderId: string, status: (typeof statusOptions)[number]) => {
     setUpdatingId(orderId);
@@ -124,52 +138,66 @@ export default function AdminPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
-      <div className="mb-8 flex items-end justify-between gap-4">
+      <div className="mb-4 flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-[#a67c00]">لوحة التحكم</p>
-          <h1 className="mt-2 text-3xl font-black text-[#111827]">إدارة الطلبات</h1>
+          <h1 className="mt-2 text-3xl font-black text-[#111827]">{activeTab === 'orders' ? 'إدارة الطلبات' : 'إدارة المنتجات'}</h1>
         </div>
         <div className="rounded-full border border-[#efe5d4] bg-[#fffaf0] px-4 py-2 text-sm font-bold text-[#8a5f00]">
           المدير: {user.email}
         </div>
       </div>
 
-      <div className="mb-8 grid gap-4 md:grid-cols-4">
-        {[
-          { label: 'إجمالي الطلبات', value: stats.totalOrders, icon: ShoppingCart, accent: 'text-[#111827]' },
-          { label: 'إجمالي الإيرادات', value: `${stats.totalRevenue.toLocaleString()} ج.م`, icon: Wallet, accent: 'text-[#a67c00]' },
-          { label: 'قيد التنفيذ', value: stats.pending, icon: PackageCheck, accent: 'text-[#d97706]' },
-          { label: 'تم التوصيل', value: stats.delivered, icon: TrendingUp, accent: 'text-[#16a34a]' },
-        ].map(({ label, value, icon: Icon, accent }) => (
-          <div key={label} className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.04)]">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-slate-500">{label}</div>
-                <div className={`mt-3 text-2xl font-black ${accent}`}>{value}</div>
-              </div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#fff7df] text-[#a67c00]">
-                <Icon className="h-5 w-5" />
-              </div>
-            </div>
-          </div>
-        ))}
+      {/* Tabs */}
+      <div className="mb-6 flex items-center gap-3">
+        <button onClick={() => setActiveTab('orders')} className={`px-4 py-2 rounded-md ${activeTab === 'orders' ? 'bg-[#d4af37] text-white' : 'bg-white border'}`}>إدارة الطلبات</button>
+        <button onClick={() => setActiveTab('products')} className={`px-4 py-2 rounded-md ${activeTab === 'products' ? 'bg-[#d4af37] text-white' : 'bg-white border'}`}>إدارة المنتجات</button>
       </div>
 
-      <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-right">
-            <thead className="bg-slate-100 text-sm text-slate-700">
-              <tr>
-                <th className="px-4 py-3 font-bold">Order ID</th>
-                <th className="px-4 py-3 font-bold">Customer</th>
-                <th className="px-4 py-3 font-bold">Phone</th>
-                <th className="px-4 py-3 font-bold">Address</th>
-                <th className="px-4 py-3 font-bold">Total</th>
-                <th className="px-4 py-3 font-bold">Payment</th>
-                <th className="px-4 py-3 font-bold">Status</th>
-              </tr>
-            </thead>
-            <tbody>
+      {activeTab === 'orders' ? (
+        <>
+          <div className="mb-8 flex items-center justify-between">
+            <div className="grid gap-4 md:grid-cols-4 w-full">
+              {[
+                { label: 'إجمالي الطلبات', value: stats.totalOrders, icon: ShoppingCart, accent: 'text-[#111827]' },
+                { label: 'إجمالي الإيرادات', value: `${stats.totalRevenue.toLocaleString()} ج.م`, icon: Wallet, accent: 'text-[#a67c00]' },
+                { label: 'قيد التنفيذ', value: stats.pending, icon: PackageCheck, accent: 'text-[#d97706]' },
+                { label: 'تم التوصيل', value: stats.delivered, icon: TrendingUp, accent: 'text-[#16a34a]' },
+              ].map(({ label, value, icon: Icon, accent }) => (
+                <div key={label} className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.04)]">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm text-slate-500">{label}</div>
+                      <div className={`mt-3 text-2xl font-black ${accent}`}>{value}</div>
+                    </div>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#fff7df] text-[#a67c00]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="ml-4">
+              <button onClick={() => setShowCreateOrder(true)} className="px-4 py-2 bg-blue-600 text-white rounded">إضافة طلب جديد</button>
+            </div>
+          </div>
+
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-right">
+                <thead className="bg-slate-100 text-sm text-slate-700">
+                  <tr>
+                    <th className="px-4 py-3 font-bold">Order ID</th>
+                    <th className="px-4 py-3 font-bold">Customer</th>
+                    <th className="px-4 py-3 font-bold">Phone</th>
+                    <th className="px-4 py-3 font-bold">Address</th>
+                    <th className="px-4 py-3 font-bold">Total</th>
+                    <th className="px-4 py-3 font-bold">Payment</th>
+                    <th className="px-4 py-3 font-bold">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
               {orders.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-4 py-12 text-center text-slate-500">
@@ -233,6 +261,28 @@ export default function AdminPage() {
           </table>
         </div>
       </div>
+
+      {/* Orders modal */}
+      {showCreateOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="max-w-3xl w-full p-6">
+            <div className="rounded-lg bg-white p-4 shadow-lg">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold">إنشاء طلب جديد</h3>
+                <button onClick={() => setShowCreateOrder(false)} className="text-slate-500">إلغاء</button>
+              </div>
+              <OrderCreatorClient onDone={() => { setShowCreateOrder(false); loadOrders(); }} />
+            </div>
+          </div>
+        </div>
+      )}
+        </>
+      ) : (
+        <div>
+          <ProductListClient />
+        </div>
+      )}
+
     </div>
   );
 }

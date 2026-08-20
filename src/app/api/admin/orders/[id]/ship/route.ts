@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { markOrderShipped } from '../../../../../../lib/orders';
-import { getCurrentUserFromRequest, isAdminEmail } from '../../../../../../lib/auth';
+import { getCurrentUserFromRequest, isAdminUser } from '../../../../../../lib/auth';
+import { broadcastEvent } from '../../../../../../lib/events';
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   try {
     const user = await getCurrentUserFromRequest(request);
-    if (!user || !isAdminEmail(user.email)) {
+    if (!user || !isAdminUser(user)) {
       return NextResponse.json({ message: 'غير مسموح' }, { status: 403 });
     }
 
@@ -18,6 +19,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     // Optionally: notify user via console/email
     console.log(`[Order] ${id} marked as Shipped, ETA: ${estimate}`);
+    try { await broadcastEvent({ type: 'orders:updated', payload: { id, action: 'shipped' } }); } catch(e){}
 
     return NextResponse.json({ message: 'تم تمييز الطلب كشحن', order: updated });
   } catch (error) {

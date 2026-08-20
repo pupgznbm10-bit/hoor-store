@@ -27,6 +27,8 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
   const [tags, setTags] = useState<string[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
 
   useEffect(() => {
     setForm(product || { name: '', brand: '', price: 0, description: '', fragranceFamily: '', notes: {}, images: [], bestseller: false });
@@ -38,6 +40,19 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
     }
     setTags(Array.from(new Set(t)));
   }, [product]);
+
+  useEffect(() => {
+    // load existing categories/tags for datalist
+    (async () => {
+      try {
+        const res = await fetch('/api/products/meta');
+        const data = await res.json();
+        setCategoryOptions(data.categories || []);
+      } catch (err) {
+        console.error('failed to load product meta', err);
+      }
+    })();
+  }, []);
 
   function update<K extends keyof Product>(k: K, v: Product[K]) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -112,6 +127,24 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
     }
   }
 
+  async function handleFilesUpload(files: FileList | null) {
+    if (!files || files.length === 0) return;
+    setUploadLoading(true);
+    try {
+      const fd = new FormData();
+      Array.from(files).forEach((f) => fd.append('file', f));
+      const res = await fetch('/api/admin/products/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || 'خطأ');
+      (data.urls || []).forEach((u: string) => addImage(u));
+    } catch (err) {
+      console.error(err);
+      alert('حدث خطأ أثناء رفع الصور');
+    } finally {
+      setUploadLoading(false);
+    }
+  }
+
   return (
     <div>
       <h2 className="text-lg font-semibold mb-2">{form.id ? 'تعديل المنتج' : 'إضافة منتج جديد'}</h2>
@@ -137,33 +170,40 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
         </div>
 
         <div className="flex gap-2 items-center mt-3">
-          <input type="file" id="img-file" className="border p-2" />
-          <button onClick={async () => {
-            const input = document.getElementById('img-file') as HTMLInputElement;
-            if (!input?.files || input.files.length === 0) {
-              alert('اختر ملفًا أولاً');
-              return;
-            }
-            try {
-              const fd = new FormData();
-              Array.from(input.files).forEach((f) => fd.append('file', f));
-              const res = await fetch('/api/admin/products/upload', { method: 'POST', body: fd });
-              const data = await res.json();
-              if (!res.ok) throw new Error(data?.message || 'خطأ');
-              (data.urls || []).forEach((u: string) => addImage(u));
-              input.value = '';
-            } catch (err) {
-              console.error(err);
-              alert('حدث خطأ أثناء رفع الصور');
-            }
-          }} className="px-3 py-1 bg-indigo-600 text-white rounded">رفع ملف</button>
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
+          onDrop={async (e) => {
+            e.preventDefault();
+            setDragOver(false);
+            const files = e.dataTransfer?.files;
+            if (!files || files.length === 0) return;
+            await handleFilesUpload(files);
+          }}
+          className={`flex-1 p-3 border rounded cursor-pointer ${dragOver ? 'bg-gray-50 border-dashed border-2 border-indigo-300' : ''}`}
+        >
+          اسحب وافلِت الصور هنا أو اخترها
+          <input type="file" id="img-file" className="hidden" multiple onChange={async (e) => { const files = e.target.files; if (files) await handleFilesUpload(files); }} />
+        </div>
+
+        <button onClick={async () => {
+          const input = document.getElementById('img-file') as HTMLInputElement;
+          if (!input) return;
+          input.click();
+        }} className="px-3 py-1 bg-indigo-600 text-white rounded">اختر ملفات</button>
+        </div>
+
+        <div className="mt-2">
+        {uploadLoading && <div className="text-sm text-indigo-600">جاري رفع الصور...</div>}
         </div>
 
         <div className="mt-2 flex gap-2 flex-wrap">
           {(form.images || []).map((im, i) => (
-            <div key={i} className="w-28 border p-1 rounded">
-              <img src={im} className="w-full h-16 object-cover rounded" />
-              <div className="flex justify-between mt-1">
+            <div key={i} className="w-36 border p-1 rounded shadow-sm">
+              <div className="w-full h-24 bg-gray-50 rounded overflow-hidden flex items-center justify-center">
+                <img src={im} className="max-h-24" />
+              </div>
+              <div className="flex justify-between mt-1 items-center">
                 <button onClick={() => removeImage(i)} className="text-xs text-red-600">حذف</button>
                 <a href={im} target="_blank" rel="noreferrer" className="text-xs">فتح</a>
               </div>
@@ -175,12 +215,23 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
       <div className="mt-4">
         <h3 className="font-semibold">نغمات العطر (notes)</h3>
         <div className="flex gap-2 mt-2">
-          <input placeholder="القسم (top/heart/base أو اسم)" className="border p-2" value={newNoteKey} onChange={(e) => setNewNoteKey(e.target.value)} />
-          <input placeholder="النغمة (مثال: ورد)" className="border p-2" value={newNoteVal} onChange={(e) => setNewNoteVal(e.target.value)} />
-          <button onClick={addNote} className="px-3 py-1 bg-green-600 text-white rounded">إضافة نغمة</button>
+          <input placeholder="أضف نغمة واضغط Enter أو ," className="border p-2 flex-1" value={newNoteVal} onChange={(e) => setNewNoteVal(e.target.value)} onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTagFromInput(); }
+          }} />
+          <button onClick={() => addTagFromInput()} className="px-3 py-1 bg-green-600 text-white rounded">أضف</button>
         </div>
 
         <div className="mt-2">
+          {tags.length > 0 && (
+            <div className="flex gap-2 flex-wrap">
+              {tags.map((t, i) => (
+                <div key={i} className="bg-gray-100 px-2 py-1 rounded flex items-center gap-2">
+                  <span>{t}</span>
+                  <button className="text-red-500 text-xs" onClick={() => removeTag(i)}>x</button>
+                </div>
+              ))}
+            </div>
+          )}
           {Object.entries(form.notes || {}).map(([section, arr]) => (
             <div key={section} className="mt-2">
               <div className="font-semibold">{section}</div>
@@ -198,4 +249,13 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
       </div>
 
       <div className="mt-4 flex items-center gap-3">
-        <label className="flex items-center gap-2"><input type="checkbox" checked={!!form
+        <label className="flex items-center gap-2"><input type="checkbox" checked={!!form.bestseller} onChange={(e) => update('bestseller', e.target.checked)} /> Bestseller</label>
+      </div>
+
+      <div className="mt-4 flex gap-2">
+        <button onClick={save} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded">{loading ? 'جاري الحفظ...' : 'حفظ'}</button>
+        <button onClick={onCancel} className="px-4 py-2 border rounded">إلغاء</button>
+      </div>
+    </div>
+  );
+}
