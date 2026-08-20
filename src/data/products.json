@@ -1,0 +1,1010 @@
+[
+  {
+    "id": "men-01",
+    "name": "Royal Cedar",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 890,
+    "rating": 4.8,
+    "description": "رائحة خشبية أنيقة مع لمسة من الفانيليا والعود لملامح رجالية متوازنة.",
+    "fragranceFamily": "خشبي",
+    "notes": {
+      "top": ["ليمون", "بيري"],
+      "heart": ["عود", "سافران"],
+      "base": ["سندل", "فانيليا", "مسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "men-02",
+    "name": "Desert Monk",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 760,
+    "rating": 4.7,
+    "description": "مزيج خفيف من الخشب المميز مع لمسات من البخور والقرنفل.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["برتقال", "رزماري"],
+      "heart": ["قرفة", "مشمش"],
+      "base": ["عود", "خشب الأرز", "مسك"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "men-03",
+    "name": "Noble Ash",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 980,
+    "rating": 4.9,
+    "description": "مزيج فخم من الخشب والعنبر مع حضور قوي وملمس باهت ومتوازن.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["ليمون", "توت"],
+      "heart": ["عود", "زعفران"],
+      "base": ["عنبر", "خشب", "مستحضر" ]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "men-04",
+    "name": "City Edge",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 620,
+    "rating": 4.6,
+    "description": "عطر يومي أنيق ومعدّل للبرود مع لمسة كحولية منعشة.",
+    "fragranceFamily": "حمضي",
+    "notes": {
+      "top": ["ليمون", "جريب فروت"],
+      "heart": ["ريحان", "أوكالبتوس"],
+      "base": ["خشب", "مusk"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "men-05",
+    "name": "Velvet Smoke",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 1140,
+    "rating": 4.9,
+    "description": "رائحة جادة وثقيلة مع ورق توتون وسندل دافئ في القاعدة.",
+    "fragranceFamily": "دوخان",
+    "notes": {
+      "top": ["رائحة دخان", "ورود"],
+      "heart": ["تايلاند", "رائحة شجرة"],
+      "base": ["سندل", "دخان", "مسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "men-06",
+    "name": "Midnight Sand",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 690,
+    "rating": 4.5,
+    "description": "رائحة مائية بطيئة مع رائحة رملية وحريرية ملائمة للأنشطة الليلية.",
+    "fragranceFamily": "مائي",
+    "notes": {
+      "top": ["ليمون", "زعتر"],
+      "heart": ["رمال", "قهوة"],
+      "base": ["خشب", "مستحضر" ]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "men-07",
+    "name": "Amber Line",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 820,
+    "rating": 4.7,
+    "description": "أمبير دافئ مع شجرة البخور وعطر خفيف يدل على الثقة والهيبة.",
+    "fragranceFamily": "عنبر",
+    "notes": {
+      "top": ["برتقالي", "فلفل"],
+      "heart": ["مغنسي", "صندل"],
+      "base": ["عنبر", "مسك", "فانيليا"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "men-08",
+    "name": "Cedar Motion",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 930,
+    "rating": 4.8,
+    "description": "حركة خشبية ناعمة مع رائحة ورقية ومظهر أنيق في المناسبات الرسمية.",
+    "fragranceFamily": "خشبي",
+    "notes": {
+      "top": ["أوكالبتوس", "جوز الهند"],
+      "heart": ["سندل", "ياسمين"],
+      "base": ["عود", "خشب", "موسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "men-09",
+    "name": "Saffron Hour",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 1160,
+    "rating": 4.9,
+    "description": "عطر فاخر ومشرق بلمسة زعفران وخصائص فخمة لأجواء المساء.",
+    "fragranceFamily": "شرقي",
+    "notes": {
+      "top": ["برتقال", "قرفة"],
+      "heart": ["زعفران", "مشمش"],
+      "base": ["مسك", "عود", "خشب"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "men-10",
+    "name": "Azure Motion",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 560,
+    "rating": 4.4,
+    "description": "راحة منعشة للنهار مع لمسات مائية وموحشة ومناسبة للارتداء اليومي.",
+    "fragranceFamily": "مائي",
+    "notes": {
+      "top": ["ليمون", "نعناع"],
+      "heart": ["رطوبة", "خزامى"],
+      "base": ["شيكور", "خشب"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "men-11",
+    "name": "Stone Echo",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 710,
+    "rating": 4.6,
+    "description": "رائحة خفيفة من الحمضيات مع قاعدة خشبية هادئة وملمس أنيق.",
+    "fragranceFamily": "حمضي",
+    "notes": {
+      "top": ["برتقال", "اناناس"],
+      "heart": ["ريحان", "فانيليا"],
+      "base": ["خشب", "عنبر"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "men-12",
+    "name": "Sandal Noir",
+    "brand": "Hoor",
+    "category": "men",
+    "price": 1250,
+    "rating": 5,
+    "description": "عطر مستوحى من خشب الصندل الراقٍ مع لمسة من البخور والدفء.",
+    "fragranceFamily": "خشبي",
+    "notes": {
+      "top": ["برتقال", "فلفل"],
+      "heart": ["صندل", "مشمش"],
+      "base": ["خشب", "مسك", "جوزة الطيب"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-01",
+    "name": "Velvet Bloom",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 760,
+    "rating": 4.8,
+    "description": "رائحة زهرية ناعمة مع توابل خفيفة لتطبع لمسة أنثوية لطيفة.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["فاكهة", "ليمون"],
+      "heart": ["ورد", "ياسمين"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-02",
+    "name": "Rose Silk",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 640,
+    "rating": 4.6,
+    "description": "عطر ناعم ورائع للنهار مع عطر وردي ناعم وقاعدة كريمية.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["فاكهة", "التوت"],
+      "heart": ["ورد", "أزهار"],
+      "base": ["مشمش", "مسك"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "women-03",
+    "name": "Golden Petal",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 890,
+    "rating": 4.8,
+    "description": "رائحة أنثوية متعالية بالزهور الذهبية والفاكهة المعطرة.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["بطيخ", "ليمون"],
+      "heart": ["وردة", "زنبق"],
+      "base": ["فانيليا", "صندل"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-04",
+    "name": "Citrus Muse",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 610,
+    "rating": 4.5,
+    "description": "لون منعش ونيّ يزهو بحمضيات رقيقة مع عناصر زهرية لطيفة.",
+    "fragranceFamily": "حمضي",
+    "notes": {
+      "top": ["برتقال", "ليمون"],
+      "heart": ["مشمش", "نرجس"],
+      "base": ["أرز", "فانيليا"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "women-05",
+    "name": "Amber Night",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 1020,
+    "rating": 4.9,
+    "description": "عطر ليلٍ فاخر حيث تبرز العنبر والورود في تناسق فاخر.",
+    "fragranceFamily": "عنبر",
+    "notes": {
+      "top": ["توت", "برتقال"],
+      "heart": ["ورد", "زنجبيل"],
+      "base": ["عنبر", "مسك", "فانيليا"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-06",
+    "name": "Pearl Mist",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 720,
+    "rating": 4.7,
+    "description": "رائحة مائية ورقيقة مع لمسات من الزهرية والخشب الناعم.",
+    "fragranceFamily": "مائي",
+    "notes": {
+      "top": ["كمثرى", "ليمون"],
+      "heart": ["وردة", "زنبق"],
+      "base": ["أرز", "خشب"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "women-07",
+    "name": "Lotus Veil",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 810,
+    "rating": 4.8,
+    "description": "مزيج زهرية ناعم في قاعدة من الفانيليا والوردة الرقيقة.",
+    "fragranceFamily": "زهرية",
+    "notes": {
+      "top": ["لوز", "برتقال"],
+      "heart": ["لوتس", "ياسمين"],
+      "base": ["فانيليا", "صندل"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-08",
+    "name": "Dusk Aura",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 980,
+    "rating": 4.9,
+    "description": "تركيبة متطورة تجمع بين الوردة والعود وتترك أثرًا أنيقًا في المساء.",
+    "fragranceFamily": "شرقي",
+    "notes": {
+      "top": ["برتقالي", "توت"],
+      "heart": ["ورد", "عود"],
+      "base": ["مِسْك", "خشب"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-09",
+    "name": "Sunlit Lace",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 680,
+    "rating": 4.6,
+    "description": "رائحة سريعة التنقل مع لمسة من الفاكهة والورود للارتداء اليومي.",
+    "fragranceFamily": "فاكهية",
+    "notes": {
+      "top": ["أناناس", "برتقال"],
+      "heart": ["رودودندرون", "ورد"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "women-10",
+    "name": "Iris Whisper",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 1180,
+    "rating": 4.9,
+    "description": "أيريس ناعم مع سرّ الخشب والجيلي، مناسب للتجهيز الرسمي.",
+    "fragranceFamily": "زهرية",
+    "notes": {
+      "top": ["بطيخ", "رُزماري"],
+      "heart": ["أيريس", "ورد"],
+      "base": ["صندل", "مسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "women-11",
+    "name": "Cream Bloom",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 730,
+    "rating": 4.7,
+    "description": "رائحة كريمية وبراقة من الفانيليا والخضروات الوردية.",
+    "fragranceFamily": "فانيليا",
+    "notes": {
+      "top": ["خوخ", "جوزة"],
+      "heart": ["وردة", "قرفة"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "women-12",
+    "name": "Pearl Orchid",
+    "brand": "Hoor",
+    "category": "women",
+    "price": 960,
+    "rating": 4.9,
+    "description": "توازن فاخر بين زهرة الأوركيد والفاكهة والورود القوية.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["توت", "ليمون"],
+      "heart": ["أوركيد", "ورد"],
+      "base": ["مسك", "مِرْكاب", "صندل"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-01",
+    "name": "Oud Majesty",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1490,
+    "rating": 5,
+    "description": "عطر شرقي ملكي مميز ومهدئ يترك ثباتًا طويلًا كخارجية فاخرة.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["مشمش", "دخان"],
+      "heart": ["عود", "زعفران"],
+      "base": ["مسك", "عنبر", "خشب"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-02",
+    "name": "Saffron Mirage",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1320,
+    "rating": 4.9,
+    "description": "مزيج شرقي دافئ يُشعل القوام مع لمسة من عصارة الزعفران.",
+    "fragranceFamily": "شرقي",
+    "notes": {
+      "top": ["فلفل", "برتقال"],
+      "heart": ["زعفران", "ورد"],
+      "base": ["مسك", "عود", "صندل"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-03",
+    "name": "Amber Dunes",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1180,
+    "rating": 4.8,
+    "description": "رمال دافئة وعنبر متوازن مع ملاحظات خشبية فاخرة.",
+    "fragranceFamily": "عنبر",
+    "notes": {
+      "top": ["ليمون", "خزامى"],
+      "heart": ["عنبر", "قصب"],
+      "base": ["فانيليا", "مسك", "صندل"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-04",
+    "name": "Cedar Evening",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 990,
+    "rating": 4.7,
+    "description": "جولة شرقية خفيفة من خشب والسيكوب في أجواء رمضانية هادئة.",
+    "fragranceFamily": "خشبي",
+    "notes": {
+      "top": ["قرفة", "بنفسج"],
+      "heart": ["عود", "جوزة"],
+      "base": ["سندل", "مسك"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "oriental-05",
+    "name": "Musk Estate",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1150,
+    "rating": 4.8,
+    "description": "مسك شرقي بارد يدعم الخشب مع إيقاع جذاب ومتين.",
+    "fragranceFamily": "مسكي",
+    "notes": {
+      "top": ["مشمش", "حليب"],
+      "heart": ["مسك", "وردة"],
+      "base": ["عود", "صندل", "عنبر"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-06",
+    "name": "Pharaoh Glow",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1270,
+    "rating": 4.9,
+    "description": "رائحة ملكية عميقة مستوحاة من حضارات الشرق وذويوه العطرية.",
+    "fragranceFamily": "شرقي",
+    "notes": {
+      "top": ["فلفل", "راوند"],
+      "heart": ["عود", "زهرة"],
+      "base": ["عنبر", "سنط", "مسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-07",
+    "name": "Golden Khaim",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1090,
+    "rating": 4.8,
+    "description": "توازن بين الخشب والزهور في قوام غني ومشرق للارتداء الرسمي.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["برتقال", "مشمش"],
+      "heart": ["وردة", "عود"],
+      "base": ["قرفة", "مسك", "صندل"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "oriental-08",
+    "name": "Rose Ember",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 980,
+    "rating": 4.7,
+    "description": "خليط من الورود والعنبر مع دفء شرقي يبرز قوة الشخصية.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["فاكهة", "ليمون"],
+      "heart": ["ورد", "قرفة"],
+      "base": ["عنبر", "خشب", "مسك"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "oriental-09",
+    "name": "Nomad Oud",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1460,
+    "rating": 5,
+    "description": "عطر بدوي فخم يجمع بين الخشب والهواء الدافئ في رائحة متكاملة.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["برتقالي", "قرفة"],
+      "heart": ["عود", "رائحة شجر"],
+      "base": ["عنبر", "مسك", "خشب"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-10",
+    "name": "Pomegranate Veil",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 830,
+    "rating": 4.7,
+    "description": "جرعة شرقية مفعمة بالرمان وتوابل لطيفة في قاع عطري دافئ.",
+    "fragranceFamily": "فاكهية",
+    "notes": {
+      "top": ["رمان", "ليمون"],
+      "heart": ["بهار", "ورد"],
+      "base": ["مسك", "صندل"]
+    },
+    "volumes": ["50ml", "75ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "oriental-11",
+    "name": "Sandal Thread",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1360,
+    "rating": 4.9,
+    "description": "صياغة فاخرة من الصندل والعود مع رائحة دافئة مستدامة.",
+    "fragranceFamily": "خشبي",
+    "notes": {
+      "top": ["عطر مائي", "ليمون"],
+      "heart": ["صندل", "عود"],
+      "base": ["مسك", "عنبر", "خشب"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "oriental-12",
+    "name": "Lantern Oud",
+    "brand": "Hoor",
+    "category": "oriental",
+    "price": 1420,
+    "rating": 4.9,
+    "description": "عطر شرقي هادئ يفتح مخزون البخور والعود علناً في لحظة.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["ليمون", "قرفة"],
+      "heart": ["عود", "بخور"],
+      "base": ["مسك", "صندل", "عنبر"]
+    },
+    "volumes": ["50ml", "100ml"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  },
+  {
+    "id": "samples-01",
+    "name": "Discovery Set No.1",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 450,
+    "rating": 4.5,
+    "description": "مجموعة عينة بخيارات خشبية وزهرية ومائية للتمتع بتجربة متنوعة.",
+    "fragranceFamily": "مزيج",
+    "notes": {
+      "top": ["برتقال", "ليمون"],
+      "heart": ["ورد", "سافران"],
+      "base": ["مسك", "صندل"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-02",
+    "name": "Golden Trial",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 520,
+    "rating": 4.6,
+    "description": "عينة اختبار عطر مع رائحة فاخرة مناسبة لاختياري اليومي.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["فاكهة", "ليمون"],
+      "heart": ["ورد", "بنفسج"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-03",
+    "name": "Citrus Taster",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 470,
+    "rating": 4.4,
+    "description": "عينة منعشة تعتمد على حمضيات متنوعة ومثالية للاستكشاف السريع.",
+    "fragranceFamily": "حمضي",
+    "notes": {
+      "top": ["ليمون", "برتقال"],
+      "heart": ["يوسفي", "نعناع"],
+      "base": ["شيكور", "خشب"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-04",
+    "name": "Sandal Trial",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 550,
+    "rating": 4.6,
+    "description": "عينة لتجربة الخشب والسلول مع لمسات من المسك والفاينلا.",
+    "fragranceFamily": "خشبي",
+    "notes": {
+      "top": ["أوكالبتوس", "برتقال"],
+      "heart": ["صندل", "خشب"],
+      "base": ["مسك", "فانيليا"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-05",
+    "name": "Floral Mini",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 480,
+    "rating": 4.5,
+    "description": "مجموعة صغيرة تستعرض الزهور والفانيليا في أسلوب أنثوي جديد.",
+    "fragranceFamily": "زهرية",
+    "notes": {
+      "top": ["رمان", "مشمش"],
+      "heart": ["ورد", "ياسمين"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-06",
+    "name": "Oud Reveal",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 520,
+    "rating": 4.7,
+    "description": "عينة سريعة لكشف طبقات العود مع لمسة دافئة من البخور.",
+    "fragranceFamily": "عودي",
+    "notes": {
+      "top": ["دخان", "برتقالي"],
+      "heart": ["عود", "مشمش"],
+      "base": ["مسك", "خشب"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-07",
+    "name": "The Gentle Glow",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 490,
+    "rating": 4.5,
+    "description": "مجموعه تجريبية بارزة وتوفر لمسات برتقالية وزهرية.",
+    "fragranceFamily": "مزيج",
+    "notes": {
+      "top": ["ليمون", "برتقال"],
+      "heart": ["ورد", "زنبق"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-08",
+    "name": "Night Wind",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 610,
+    "rating": 4.7,
+    "description": "رائحة عينيه مثالية للمناسبات، مع الأجواء الليلية والخشب اللطيف.",
+    "fragranceFamily": "دخاني",
+    "notes": {
+      "top": ["ليمون", "بخور"],
+      "heart": ["خشب", "رائحة عطرية"],
+      "base": ["مسك", "صندل"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-09",
+    "name": "Velvet Notes",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 530,
+    "rating": 4.6,
+    "description": "عينة تستكشف القوام الناعم مع رائحة الفانيليا والوردة.",
+    "fragranceFamily": "فانيليا",
+    "notes": {
+      "top": ["فاكهة", "برتقالي"],
+      "heart": ["ورد", "فانيليا"],
+      "base": ["مسك", "صندل"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-10",
+    "name": "Desert Trial",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 495,
+    "rating": 4.5,
+    "description": "تجربة رملية الفاكهة مع خفة الحشرات الخفيفة في القاعدة.",
+    "fragranceFamily": "شرقي",
+    "notes": {
+      "top": ["ليمون", "فلفل"],
+      "heart": ["رمل", "قرفة"],
+      "base": ["عود", "مسك"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-11",
+    "name": "Bloom Starter",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 470,
+    "rating": 4.4,
+    "description": "عينة سهلة للبدء وجمع النغمات الزهرية والفاكهية.",
+    "fragranceFamily": "زهري",
+    "notes": {
+      "top": ["برتقالي", "توت"],
+      "heart": ["ورد", "خزامى"],
+      "base": ["فانيليا", "مسك"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": false
+  },
+  {
+    "id": "samples-12",
+    "name": "Luxury Trial Box",
+    "brand": "Hoor",
+    "category": "samples",
+    "price": 620,
+    "rating": 4.8,
+    "description": "علبة تجريبية فاخره تجمع أكثر من عطر من كل فئة مختارة بعناية.",
+    "fragranceFamily": "مزيج",
+    "notes": {
+      "top": ["ليمون", "برتقال"],
+      "heart": ["ورد", "عود"],
+      "base": ["مسك", "صندل"]
+    },
+    "volumes": ["Sample"],
+    "images": [
+      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
+    ],
+    "bestseller": true
+  }
+]

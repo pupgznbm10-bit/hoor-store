@@ -1,0 +1,26 @@
+[
+  {
+    "id": "HO-1787182963687-OTLG",
+    "userId": "u_1787179073804_qax7fc",
+    "userEmail": "halandmode@gmail.com",
+    "fullName": "منتثثقغث",
+    "phone": "12455511",
+    "city": "قغثغقثغ",
+    "address": "قثغقثغقثغقث",
+    "total": 930,
+    "paymentMethod": "cod",
+    "items": [
+      {
+        "title": "Royal Cedar",
+        "price": 890,
+        "quantity": 1,
+        "volume": "50ml"
+      }
+    ],
+    "status": "Delivered",
+    "createdAt": "2026-08-19T23:42:43.687Z",
+    "updatedAt": "2026-08-20T14:34:41.323Z",
+    "deliveredAt": "2026-08-20T14:34:41.323Z",
+    "revenueReleased": true
+  }
+]
