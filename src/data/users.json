@@ -18,5 +18,15 @@
     "createdAt": "2026-08-20T02:43:00.000Z",
     "isVerified": true,
     "role": "admin"
+  },
+  {
+    "id": "u_1787332361169_t9tlt1",
+    "fullName": "محمد وليد",
+    "email": "pupg.znbm10@gmail.com",
+    "phone": "01551687704",
+    "passwordHash": "$2b$10$nD0o4zq4xhLvTFQoisehF..9ltITlGxd9MTNEZ8DRt0yEV1qKp0Rm",
+    "createdAt": "2026-08-21T17:12:41.169Z",
+    "isVerified": true,
+    "role": "user"
   }
 ]

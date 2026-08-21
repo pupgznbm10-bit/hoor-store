@@ -112,11 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!res.ok) return { success: false, message: data.message };
       if (data.pending) {
         try { localStorage.setItem('pending_verification_email', String(payload.email || '')); } catch(e) {}
-        if (data.otp) {
-          try { localStorage.setItem('pending_verification_otp', String(data.otp)); } catch(e) {}
-          toast.info(`رمز التحقق المؤقت: ${data.otp}`);
-        }
-        toast.success(data.fallback ? 'تم إنشاء الحساب، استخدم الرمز الظاهر في الرسالة للتأكيد' : 'تم إنشاء الحساب. يرجى التحقق من بريدك الإلكتروني');
+        toast.success(data.fallback ? 'تم إنشاء الحساب، ولكن البريد الإلكتروني غير مُعدّ في هذا النشر. يرجى تفعيل SMTP في إعدادات Vercel.' : 'تم إنشاء الحساب. يرجى التحقق من بريدك الإلكتروني');
         const redirectEmail = data.emailRaw || payload.email || '';
         try { window.location.href = `/auth/verify-email?email=${encodeURIComponent(String(redirectEmail))}`; } catch (e) {}
         return { success: true };

@@ -28,8 +28,8 @@ export async function sendOtpEmail(email: string, otp: string, type: 'register' 
   `;
 
   if (!transporterReady()) {
-   console.log(`[EMAIL] Would send OTP to ${email}: ${otp}`);
-   return { sent: false, otp, fallback: true };
+   console.warn(`[EMAIL] SMTP not configured for ${email}. OTP generated but email was not sent.`);
+   return { sent: false, fallback: true };
   }
 
   try {
@@ -48,9 +48,9 @@ export async function sendOtpEmail(email: string, otp: string, type: 'register' 
      html,
    });
 
-   return { sent: true, otp, fallback: false };
+   return { sent: true, fallback: false };
   } catch (error) {
    console.error('sendOtpEmail failed:', error);
-   return { sent: false, otp, fallback: true };
+   return { sent: false, fallback: true };
   }
 }

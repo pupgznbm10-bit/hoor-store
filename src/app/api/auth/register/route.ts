@@ -38,11 +38,12 @@ export async function POST(request: Request) {
     const emailResult = await sendOtpEmail(email, otp, 'register');
 
     return NextResponse.json({
-      message: emailResult.sent ? 'تم إنشاء الحساب — يرجى التحقق من بريدك الإلكتروني' : 'تم إنشاء الحساب، ولكن البريد الإلكتروني لم يرسل في بيئة Vercel. استخدم رمز التحقق التالي: ' + otp,
+      message: emailResult.sent
+        ? 'تم إنشاء الحساب — يرجى التحقق من بريدك الإلكتروني'
+        : 'تم إنشاء الحساب، ولكن البريد الإلكتروني غير مُعدّ في هذا النشر. يرجى تفعيل SMTP في إعدادات Vercel.',
       pending: true,
       email: email.replace(/(.{2})(.*)(@.*)/, '$1***$3'),
       emailRaw: email,
-      otp: emailResult.otp,
       fallback: !emailResult.sent,
     }, { status: 201 });
   } catch (error) {

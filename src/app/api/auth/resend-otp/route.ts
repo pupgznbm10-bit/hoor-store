@@ -22,8 +22,9 @@ export async function POST(request: NextRequest) {
       const emailResult = await sendOtpEmail(email, otp, type === 'register' ? 'register' : 'reset');
 
       return NextResponse.json({
-        message: emailResult.sent ? 'تم إعادة إرسال رمز التحقق' : 'تم إنشاء رمز جديد، لكن البريد الإلكتروني لم يرسل في بيئة Vercel. استخدم الرمز التالي: ' + otp,
-        otp: emailResult.otp,
+        message: emailResult.sent
+          ? 'تم إعادة إرسال رمز التحقق'
+          : 'تم إعادة إرسال الرمز، ولكن البريد الإلكتروني غير مُعدّ في هذا النشر. يرجى تفعيل SMTP في إعدادات Vercel.',
         fallback: !emailResult.sent,
       });
     } catch (err: any) {
