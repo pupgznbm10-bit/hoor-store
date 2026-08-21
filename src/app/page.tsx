@@ -12,6 +12,37 @@ const FEATURED_PRODUCTS: Product[] = (products as Product[])
   .filter((product) => product.bestseller)
   .slice(0, 4);
 
+const CATEGORY_CARDS = [
+  {
+    title: 'عطور رجالية',
+    subtitle: 'قوة، أناقة، ودفء',
+    href: '/category/men',
+    accent: 'from-[#111827] via-[#1f2937] to-[#d4af37]',
+    image: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'عطور نسائية',
+    subtitle: 'زهور، ناعم، ومميز',
+    href: '/category/women',
+    accent: 'from-[#b68a5f] via-[#d7b38c] to-[#f3e5d7]',
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'عطور شرقية وعود',
+    subtitle: 'غنى، عميق، وملامح فاخرة',
+    href: '/category/oriental',
+    accent: 'from-[#4b2e2d] via-[#7a4b3a] to-[#d4af37]',
+    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'عينات وتجارب',
+    subtitle: 'اكتشف رائحتك المفضلة',
+    href: '/category/samples',
+    accent: 'from-[#1a1a1a] via-[#3d3d3d] to-[#d2b36c]',
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80',
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#f9f7f3]">
@@ -74,6 +105,39 @@ export default function HomePage() {
               ))}
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-10">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-[#a67c00]">تصفح حسب النوع</p>
+            <h3 className="mt-1 text-3xl font-black text-[#111827]">اكتشف قسمك المفضل</h3>
+          </div>
+          <Link href="/products" className="text-sm font-bold text-[#8a5f00] transition hover:text-[#6b4a00]">عرض كل المنتجات</Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {CATEGORY_CARDS.map((category) => (
+            <Link key={category.title} href={category.href} className="group relative overflow-hidden rounded-[28px] border border-[#efe5d4] bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(15,23,42,0.12)]">
+              <div className={`absolute inset-0 bg-gradient-to-br ${category.accent} opacity-90`} />
+              <img src={category.image} alt={category.title} className="absolute inset-0 h-full w-full object-cover opacity-30 transition duration-500 group-hover:scale-105" />
+              <div className="relative flex min-h-[260px] flex-col justify-between p-5 text-white">
+                <div className="flex items-center justify-between">
+                  <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[10px] font-medium backdrop-blur-sm">مجموعة مختارة</span>
+                </div>
+                <div>
+                  <p className="text-xs tracking-[0.22em] text-white/70">HOOR</p>
+                  <h4 className="mt-2 text-2xl font-black">{category.title}</h4>
+                  <p className="mt-2 text-sm text-white/80">{category.subtitle}</p>
+                </div>
+                <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-white/90">
+                  استكشف الآن
+                  <span aria-hidden="true">→</span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 

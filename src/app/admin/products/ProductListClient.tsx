@@ -27,21 +27,24 @@ export default function ProductListClient() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [toDelete, setToDelete] = useState<string | null>(null);
 
-  async function fetchProducts() {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/products');
-      const data = await res.json();
-      setProducts(data.products || []);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    fetchProducts();
+    let active = true;
+
+    const loadProducts = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        if (active) setProducts(data.products || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    void loadProducts();
+    return () => { active = false; };
   }, []);
 
   function openNew() {
@@ -66,7 +69,7 @@ export default function ProductListClient() {
     } else {
       setProducts((s) => s.map((p) => (p.id === prod.id ? prod : p)));
     }
-    try { window.dispatchEvent(new CustomEvent('products:updated')); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('products:updated')); } catch {}
   }
 
   async function doConfirmDelete() {
@@ -77,7 +80,7 @@ export default function ProductListClient() {
     const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
     if (!res.ok) return alert('حدث خطأ أثناء الحذف');
     setProducts((s) => s.filter((x) => x.id !== id));
-    try { window.dispatchEvent(new CustomEvent('products:updated')); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('products:updated')); } catch {}
   }
 
   return (
@@ -191,7 +194,7 @@ export default function ProductListClient() {
             </div>
 
             <div className="max-h-[80vh] overflow-y-auto px-4 py-5 md:px-7">
-              <ProductEditorClient product={editing} onSaved={onSaved} onCancel={() => setShowEditor(false)} />
+              <ProductEditorClient key={editing ? editing.id || 'new' : 'new'} product={editing} onSaved={onSaved} onCancel={() => setShowEditor(false)} />
             </div>
           </div>
         </div>

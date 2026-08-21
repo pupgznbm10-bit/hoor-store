@@ -5,9 +5,23 @@ import ProductCard from '../../components/ProductCard';
 import CartDrawer from '../../components/CartDrawer';
 import { useCart } from '../../context/CartContext';
 
+type ProductItem = {
+  id?: string;
+  name?: string;
+  name_ar?: string;
+  name_en?: string;
+  category?: string;
+  price?: number;
+  fragranceFamily?: string;
+  tags?: string[];
+  notes?: Record<string, string[]>;
+  volumes?: string[];
+};
+
 export default function ProductsPage() {
-  const [ALL_PRODUCTS, setAllProducts] = useState<any[]>([]);
+  const [ALL_PRODUCTS, setAllProducts] = useState<ProductItem[]>([]);
   const [query, setQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | string>('all');
   const [selectedFamilies, setSelectedFamilies] = useState<string[]>([]);
   const [selectedNotes, setSelectedNotes] = useState<string[]>([]);
   const [selectedVolumes, setSelectedVolumes] = useState<string[]>([]);
@@ -17,19 +31,29 @@ export default function ProductsPage() {
 
   const [families, setFamilies] = useState<string[]>([]);
   const [notes, setNotes] = useState<string[]>([]);
-  const [volumes, setVolumes] = useState<string[]>(['50ml', '100ml', '75ml', 'Sample']);
+  const [categories, setCategories] = useState<string[]>([]);
+  const volumes = ['50ml', '100ml', '75ml', 'Sample'];
+  const categoryOptions = [
+    { label: 'جميع العطور', value: 'all' },
+    { label: 'رجالية', value: 'men' },
+    { label: 'نسائية', value: 'women' },
+    { label: 'شرقية وعود', value: 'oriental' },
+    { label: 'عينات وتجارب', value: 'samples' },
+  ];
 
   useEffect(() => {
     async function load() {
       try {
         const res = await fetch('/api/products', { cache: 'force-cache' });
         const data = await res.json();
-        const prods = Array.isArray(data.products) ? data.products : [];
+        const prods = Array.isArray(data.products) ? (data.products as ProductItem[]) : [];
         setAllProducts(prods);
 
         const famSet = new Set<string>();
         const noteSet = new Set<string>();
-        prods.forEach((p: any) => {
+        const categorySet = new Set<string>();
+        prods.forEach((p) => {
+          if (p.category) categorySet.add(String(p.category));
           if (p.fragranceFamily) famSet.add(p.fragranceFamily);
           if (Array.isArray(p.tags)) p.tags.forEach((t: string) => noteSet.add(t));
           if (p.notes && typeof p.notes === 'object') {
@@ -40,6 +64,7 @@ export default function ProductsPage() {
 
         setFamilies(Array.from(famSet));
         setNotes(Array.from(noteSet));
+        setCategories(Array.from(categorySet));
       } catch (err) {
         console.error('failed to load products', err);
       }
@@ -62,6 +87,7 @@ export default function ProductsPage() {
           : (Object.values(p.notes ?? {}).flat() as string[]);
 
         if (q && !searchTarget.includes(q)) return false;
+        if (selectedCategory !== 'all' && String(p.category ?? '') !== String(selectedCategory)) return false;
         if (selectedFamilies.length && !selectedFamilies.includes(p.fragranceFamily ?? '')) return false;
         if (selectedNotes.length && !selectedNotes.some((n) => noteValues.includes(n))) return false;
         if (selectedVolumes.length && !selectedVolumes.some((v) => (p.volumes ?? []).includes(v))) return false;
@@ -78,7 +104,7 @@ export default function ProductsPage() {
             return 0;
         }
       });
-  }, [ALL_PRODUCTS, query, selectedFamilies, selectedNotes, selectedVolumes, priceRange, sortBy]);
+  }, [ALL_PRODUCTS, query, selectedCategory, selectedFamilies, selectedNotes, selectedVolumes, priceRange, sortBy]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -86,6 +112,34 @@ export default function ProductsPage() {
         <aside className="hidden lg:block">
           <div className="rounded-lg bg-white p-4 shadow-sm">
             <h4 className="mb-3 font-semibold">تصفية البحث</h4>
+
+            <div className="mb-4">
+              <label className="text-sm font-medium">التصنيف</label>
+              <div className="mt-2 flex flex-col gap-2">
+                <label className="text-sm">
+                  <input
+                    type="radio"
+                    name="category-filter"
+                    className="ml-2"
+                    checked={selectedCategory === 'all'}
+                    onChange={() => setSelectedCategory('all')}
+                  />
+                  جميع العطور
+                </label>
+                {categories.map((c) => (
+                  <label key={c} className="text-sm">
+                    <input
+                      type="radio"
+                      name="category-filter"
+                      className="ml-2"
+                      checked={selectedCategory === c}
+                      onChange={() => setSelectedCategory(c)}
+                    />
+                    {c === 'men' ? 'رجالية' : c === 'women' ? 'نسائية' : c === 'oriental' ? 'شرقية وعود' : c === 'samples' ? 'عينات وتجارب' : c}
+                  </label>
+                ))}
+              </div>
+            </div>
 
             <div className="mb-4">
               <label className="text-sm font-medium">العائلة العطرية</label>
@@ -149,17 +203,36 @@ export default function ProductsPage() {
             </div>
 
             <div className="mt-3 flex gap-2">
-              <button onClick={() => { setSelectedFamilies([]); setSelectedNotes([]); setSelectedVolumes([]); setPriceRange([0, 2000]); }} className="rounded bg-slate-100 px-3 py-2">مسح</button>
+              <button onClick={() => { setSelectedCategory('all'); setSelectedFamilies([]); setSelectedNotes([]); setSelectedVolumes([]); setPriceRange([0, 2000]); }} className="rounded bg-slate-100 px-3 py-2">مسح</button>
               <button onClick={() => {}} className="rounded bg-[#d4af37] px-3 py-2 text-white">تطبيق</button>
             </div>
           </div>
         </aside>
 
         <section>
-          <div className="mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <input placeholder="ابحث عن منتج" value={query} onChange={(e) => setQuery(e.target.value)} className="rounded border px-3 py-2" />
-              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="rounded border px-3 py-2">
+          <div className="mb-4 overflow-x-auto pb-2">
+            <div className="flex min-w-max gap-2">
+              {categoryOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setSelectedCategory(option.value)}
+                  className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition ${
+                    selectedCategory === option.value
+                      ? 'border-[#d4af37] bg-[#d4af37] text-white shadow-sm'
+                      : 'border-[#efe2c2] bg-white text-[#3a2b12] hover:border-[#d4af37] hover:text-[#8a5f00]'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <div className="flex flex-1 items-center gap-3">
+              <input placeholder="ابحث عن منتج" value={query} onChange={(e) => setQuery(e.target.value)} className="w-full rounded border border-slate-200 px-3 py-2 focus:border-[#d4af37] focus:outline-none" />
+              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="rounded border border-slate-200 px-3 py-2 focus:border-[#d4af37] focus:outline-none">
                 <option>الأحدث</option>
                 <option>الأعلى سعراً</option>
                 <option>الأقل سعراً</option>

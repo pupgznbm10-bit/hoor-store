@@ -1,29 +1,32 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 export default function ResetPasswordClient() {
   const search = useSearchParams();
   const router = useRouter();
-  const emailFromQuery = search?.get('email') || '';
-  const codeFromQuery = search?.get('code') || '';
 
-  const [email, setEmail] = useState(emailFromQuery);
-  const [code, setCode] = useState(codeFromQuery);
+  const queryEmail = search?.get('email') || '';
+  const queryCode = search?.get('code') || '';
+  const storedEmail = typeof window !== 'undefined' ? localStorage.getItem('hoor_reset_email') || '' : '';
+  const storedCode = typeof window !== 'undefined' ? localStorage.getItem('hoor_reset_code') || '' : '';
+
+  const email = queryEmail || storedEmail;
+  const code = queryCode || storedCode;
+
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (emailFromQuery) setEmail(emailFromQuery);
-    if (codeFromQuery) setCode(codeFromQuery);
-  }, [emailFromQuery, codeFromQuery]);
-
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !code || !password) return toast.error('جميع الحقول مطلوبة');
+
+    if (!email || !code) {
+      return toast.error('انتهت الجلسة أو تم فقدان رمز التحقق. يرجع وإعادة إرسال الرمز من جديد.');
+    }
+    if (!password || !confirm) return toast.error('جميع الحقول مطلوبة');
     if (password.length < 6) return toast.error('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
     if (password !== confirm) return toast.error('كلمتا المرور غير متطابقتين');
 
@@ -32,6 +35,14 @@ export default function ResetPasswordClient() {
       const res = await fetch('/api/auth/reset-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, code, newPassword: password }) });
       const data = await res.json();
       if (!res.ok) return toast.error(data.message || 'فشل إعادة تعيين كلمة المرور');
+
+      localStorage.removeItem('hoor_reset_email');
+      localStorage.removeItem('hoor_reset_code');
+
+      if (data.user) {
+        localStorage.setItem('hoor_user_v1', JSON.stringify(data.user));
+      }
+
       toast.success('تم تحديث كلمة المرور وتم تسجيل الدخول تلقائيًا');
       router.push('/');
     } catch (err) {
@@ -49,12 +60,7 @@ export default function ResetPasswordClient() {
         <form onSubmit={submit} className="space-y-3">
           <div>
             <label className="text-sm">البريد الإلكتروني</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full mt-1 px-3 py-2 border rounded" />
-          </div>
-
-          <div>
-            <label className="text-sm">رمز التحقق</label>
-            <input type="text" value={code} onChange={(e) => setCode(e.target.value)} className="w-full mt-1 px-3 py-2 border rounded" />
+            <input type="email" value={email} readOnly className="w-full mt-1 px-3 py-2 border rounded bg-slate-50" />
           </div>
 
           <div>

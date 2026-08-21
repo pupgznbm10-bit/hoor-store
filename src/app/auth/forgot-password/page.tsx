@@ -12,6 +12,19 @@ export default function ForgotPasswordPage() {
   const [resendCountdown, setResendCountdown] = useState(0);
   const router = useRouter();
 
+  const startResendTimer = () => {
+    setResendCountdown(30);
+    const timer = setInterval(() => {
+      setResendCountdown((current) => {
+        if (current <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return current - 1;
+      });
+    }, 1000);
+  };
+
   const requestOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -21,6 +34,7 @@ export default function ForgotPasswordPage() {
       if (!res.ok) return toast.error(data.message || 'فشل الإرسال');
       toast.success('تم إرسال رمز التحقق');
       setStep('otp');
+      startResendTimer();
     } catch (err) {
       console.error(err);
       toast.error('خطأ في الشبكة');
@@ -37,8 +51,9 @@ export default function ForgotPasswordPage() {
       const data = await res.json();
       if (!res.ok) return toast.error(data.message || 'رمز غير صحيح');
       toast.success('تم التحقق');
-      // redirect to reset password page with email and code in query
-      router.push(`/auth/reset-password?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`);
+      localStorage.setItem('hoor_reset_email', email);
+      localStorage.setItem('hoor_reset_code', code);
+      router.replace(`/auth/reset-password?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`);
     } catch (err) {
       console.error(err);
       toast.error('خطأ في الشبكة');
@@ -50,14 +65,13 @@ export default function ForgotPasswordPage() {
   const resend = async () => {
     if (resendCountdown > 0) return;
 
-    // If email looks masked, try to use locally-stored pending_verification_email
     let targetEmail = email;
     if (String(targetEmail).includes('***')) {
       try {
         const stored = localStorage.getItem('pending_verification_email');
         if (stored) targetEmail = stored;
         else return toast.error('الرجاء إدخال بريدك الإلكتروني الكامل لإعادة الإرسال');
-      } catch (e) {
+      } catch {
         return toast.error('الرجاء إدخال بريدك الإلكتروني الكامل لإعادة الإرسال');
       }
     }
@@ -68,16 +82,7 @@ export default function ForgotPasswordPage() {
       const data = await res.json();
       if (!res.ok) return toast.error(data.message || 'فشل إعادة الإرسال');
       toast.success('تم إعادة إرسال رمز التحقق');
-      setResendCountdown(30);
-      const t = setInterval(() => {
-        setResendCountdown((c) => {
-          if (c <= 1) {
-            clearInterval(t);
-            return 0;
-          }
-          return c - 1;
-        });
-      }, 1000);
+      startResendTimer();
     } catch (err) {
       console.error(err);
       toast.error('خطأ في الشبكة');
@@ -111,7 +116,19 @@ export default function ForgotPasswordPage() {
               <label className="text-sm">رمز التحقق</label>
               <input type="text" value={code} onChange={(e) => setCode(e.target.value)} maxLength={6} className="w-full mt-1 px-3 py-2 border rounded text-center tracking-widest text-lg" />
             </div>
-            <div className="pt-4">
+
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={resend}
+                disabled={loading || resendCountdown > 0}
+                className="w-full py-2 border border-[#D4AF37] text-[#0B132B] rounded font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {resendCountdown > 0 ? `إعادة إرسال الرمز (${resendCountdown}ث)` : 'إعادة إرسال الرمز'}
+              </button>
+            </div>
+
+            <div className="pt-2">
               <button type="submit" disabled={loading} className="w-full py-3 bg-[#D4AF37] text-white rounded font-semibold">{loading ? 'جارٍ...' : 'التحقق'}</button>
             </div>
           </form>

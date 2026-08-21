@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       // update user to verified
       const auth = await import('../../../../lib/auth');
       const users = await auth.readUsers();
-      const idx = users.findIndex((u: any) => u.email.toLowerCase() === resolvedEmail);
+      const idx = users.findIndex((u: { email: string }) => u.email.toLowerCase() === resolvedEmail);
       if (idx !== -1) {
         users[idx].isVerified = true;
         await auth.writeUsers(users);
@@ -47,15 +47,23 @@ export async function POST(request: NextRequest) {
 
       await consumeOtp(resolvedEmail);
 
+      if (idx === -1) {
+        return NextResponse.json({ message: 'المستخدم غير موجود' }, { status: 404 });
+      }
+
       const safe = sanitizeUser(users[idx]);
-      const token = signSessionToken(safe as any);
+      const token = signSessionToken(safe);
       const response = NextResponse.json({ message: 'تم التحقق وتفعيل الحساب', user: safe });
       response.cookies.set({ name: 'hoor_token', value: token, httpOnly: true, sameSite: 'lax', path: '/', maxAge: 60 * 60 * 24 * 7 });
       return response;
     }
 
-    // For reset or general verification just respond success
-    await consumeOtp(resolvedEmail);
+    // Reset verification is intentionally not consumed here because the reset-password API
+    // will consume it only after the password is successfully updated.
+    if (type === 'general') {
+      await consumeOtp(resolvedEmail);
+    }
+
     return NextResponse.json({ message: 'تم التحقق بنجاح', verified: true });
   } catch (error) {
     console.error('verify-otp error:', error);

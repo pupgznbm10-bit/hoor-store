@@ -14,7 +14,7 @@
     "fullName": "Admin",
     "email": "mw01551687704@gmail.com",
     "phone": "",
-    "passwordHash": "$2b$10$8Ku/sieUbtT9kc7mDg3kauEIEmbeh0bVxIKn3ER1uSZkkENB0CUFq",
+    "passwordHash": "$2b$10$oMoy6a7BT8UcCgslzpKznO5dn33oiLGDd6H92gUz9Gf/WguF/vcpW",
     "createdAt": "2026-08-20T02:43:00.000Z",
     "isVerified": true,
     "role": "admin"

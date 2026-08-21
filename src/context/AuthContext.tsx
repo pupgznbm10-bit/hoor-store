@@ -42,6 +42,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
+        const stored = localStorage.getItem('hoor_user_v1');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored) as User;
+            setUser(parsed);
+          } catch (error) {
+            console.warn('invalid cached user payload', error);
+            localStorage.removeItem('hoor_user_v1');
+          }
+        }
+
         const res = await fetch('/api/auth/me', { cache: 'no-store' });
         const data = await res.json();
         if (res.ok && data.user) {

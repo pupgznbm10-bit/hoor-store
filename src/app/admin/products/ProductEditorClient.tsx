@@ -19,13 +19,25 @@ type Product = {
   bestseller?: boolean;
 };
 
+function makeEmptyProduct(): Product {
+  return { name: '', brand: '', price: 0, description: '', fragranceFamily: '', notes: {}, images: [], bestseller: false };
+}
+
+function extractTagsFromProduct(product: Product | null) {
+  const t: string[] = [];
+  if (product) {
+    if (Array.isArray(product.tags)) t.push(...product.tags);
+    if (product.notes && typeof product.notes === 'object') {
+      Object.values(product.notes).forEach((arr) => arr.forEach((v) => t.push(v)));
+    }
+  }
+  return Array.from(new Set(t));
+}
+
 export default function ProductEditorClient({ product, onSaved, onCancel }: { product: Product | null; onSaved: (p: Product, created?: boolean) => void; onCancel: () => void; }) {
-  const [form, setForm] = useState<Product>(product || {
-    name: '', brand: '', price: 0, description: '', fragranceFamily: '', notes: {}, images: [], bestseller: false,
-  });
-  const [newNoteKey, setNewNoteKey] = useState('');
+  const [form, setForm] = useState<Product>(() => product || makeEmptyProduct());
   const [newNoteVal, setNewNoteVal] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(() => extractTagsFromProduct(product));
   const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
@@ -34,25 +46,17 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
   const inputClass = 'w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-amber-400 focus:ring-4 focus:ring-amber-100';
 
   useEffect(() => {
-    setForm(product || { name: '', brand: '', price: 0, description: '', fragranceFamily: '', notes: {}, images: [], bestseller: false });
-    const t: string[] = [];
-    if (product) {
-      if (Array.isArray(product.tags)) t.push(...product.tags);
-      if (product.notes && typeof product.notes === 'object') Object.values(product.notes).forEach((arr) => arr.forEach((v) => t.push(v)));
-    }
-    setTags(Array.from(new Set(t)));
-  }, [product]);
-
-  useEffect(() => {
-    (async () => {
+    const loadMeta = async () => {
       try {
         const res = await fetch('/api/products/meta');
-        const data = await res.json();
+        const data = (await res.json()) as { categories?: string[] };
         setCategoryOptions(data.categories || []);
       } catch (err) {
         console.error('failed to load product meta', err);
       }
-    })();
+    };
+
+    void loadMeta();
   }, []);
 
   function update<K extends keyof Product>(k: K, v: Product[K]) {
@@ -61,32 +65,30 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
 
   function addImage(url: string) {
     if (!url) return;
-    setForm((f) => ({ ...f, images: [...(f.images || []), url] }));
+    setForm((f) => {
+      const current = f.images || [];
+      if (current.includes(url)) return f;
+      return { ...f, images: [...current, url] };
+    });
+  }
+
+  function setPrimaryImage(idx: number) {
+    setForm((f) => {
+      const images = [...(f.images || [])];
+      if (images.length < 2) return f;
+      const [selected] = images.splice(idx, 1);
+      images.unshift(selected);
+      return { ...f, images };
+    });
   }
 
   function removeImage(idx: number) {
-    setForm((f) => ({ ...f, images: (f.images || []).filter((_, i) => i !== idx) }));
-  }
-
-  function addNote() {
-    if (!newNoteKey) return;
     setForm((f) => {
-      const notes = { ...(f.notes || {}) } as NoteSections;
-      notes[newNoteKey] = [...(notes[newNoteKey] || []), newNoteVal || ''];
-      return { ...f, notes };
-    });
-    setNewNoteKey('');
-    setNewNoteVal('');
-  }
-
-  function removeNote(section: string, idx: number) {
-    setForm((f) => {
-      const notes = { ...(f.notes || {}) } as NoteSections;
-      notes[section] = notes[section].filter((_, i) => i !== idx);
-      if (notes[section].length === 0) delete notes[section];
-      return { ...f, notes };
+      const images = (f.images || []).filter((_, i) => i !== idx);
+      return { ...f, images };
     });
   }
+
 
   function addTagFromInput(val?: string) {
     const v = (val || newNoteVal || '').trim();
@@ -108,14 +110,16 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
         return;
       }
 
-      const payload: any = { ...form };
-      if (tags && tags.length) payload.tags = tags;
-      if (payload.discountPrice === '') payload.discountPrice = undefined;
+      const payload: Record<string, unknown> = { ...form };
+      if (tags.length) payload.tags = tags;
+      if (payload.discountPrice === '') {
+        delete payload.discountPrice;
+      }
 
       const method = form.id ? 'PUT' : 'POST';
       const url = form.id ? `/api/products/${form.id}` : '/api/products';
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      const data = await res.json();
+      const data = (await res.json()) as { message?: string; product?: Product };
       if (!res.ok) throw new Error(data?.message || 'خطأ');
       onSaved(data.product || data, !form.id);
     } catch (err) {
@@ -159,12 +163,12 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
 
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700">السعر</label>
-          <input type="number" className={inputClass} placeholder="السعر" value={form.price as any || 0} onChange={(e) => update('price', Number(e.target.value))} />
+          <input type="number" className={inputClass} placeholder="السعر" value={form.price ?? 0} onChange={(e) => update('price', Number(e.target.value))} />
         </div>
-
+ 
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700">السعر قبل الخصم</label>
-          <input type="number" className={inputClass} placeholder="سعر الخصم (اختياري)" value={(form as any).discountPrice as any || ''} onChange={(e) => update('discountPrice' as any, e.target.value === '' ? '' : Number(e.target.value))} />
+          <input type="number" className={inputClass} placeholder="سعر الخصم (اختياري)" value={form.discountPrice ?? ''} onChange={(e) => update('discountPrice', e.target.value === '' ? undefined : Number(e.target.value))} />
         </div>
 
         <div className="space-y-2 md:col-span-2">
@@ -193,7 +197,7 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
             onClick={() => { const el = document.getElementById('img-url') as HTMLInputElement; addImage(el?.value || ''); if (el) el.value=''; }}
             className="rounded-full bg-emerald-500 px-4 py-3 text-sm font-black text-white shadow-md transition hover:bg-emerald-600"
           >
-            إضافة
+            إضافة رابط
           </button>
         </div>
 
@@ -210,8 +214,8 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
             }}
             className={`flex-1 rounded-[22px] border-2 border-dashed p-5 text-center text-sm font-medium text-slate-500 transition ${dragOver ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-slate-50'}`}
           >
-            اسحب وافلِت الصور هنا أو اخترها
-            <input type="file" id="img-file" className="hidden" multiple onChange={async (e) => { const files = e.target.files; if (files) await handleFilesUpload(files); }} />
+            اسحب وافلِت الصور هنا أو اخترها من الجهاز
+            <input type="file" id="img-file" className="hidden" multiple accept="image/*" onChange={async (e) => { const files = e.target.files; if (files) await handleFilesUpload(files); }} />
           </div>
 
           <button
@@ -222,7 +226,7 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
             }}
             className="rounded-full bg-slate-900 px-4 py-3 text-sm font-black text-white shadow-md transition hover:bg-slate-800"
           >
-            اختر ملفات
+            اختر من الجهاز
           </button>
         </div>
 
@@ -230,12 +234,15 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
 
         <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
           {(form.images || []).map((im, i) => (
-            <div key={i} className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-sm">
+            <div key={`${im}-${i}`} className={`overflow-hidden rounded-2xl border bg-slate-50 p-2 shadow-sm ${i === 0 ? 'border-amber-400 ring-2 ring-amber-100' : 'border-slate-200'}`}>
               <div className="h-24 overflow-hidden rounded-xl bg-white">
                 <img src={im} alt="product" className="h-full w-full object-cover" />
               </div>
-              <div className="mt-2 flex items-center justify-between">
+              <div className="mt-2 flex items-center justify-between gap-2">
                 <button onClick={() => removeImage(i)} className="text-xs font-bold text-red-500">حذف</button>
+                <button onClick={() => setPrimaryImage(i)} className="text-[10px] font-bold text-amber-700">
+                  {i === 0 ? 'رئيسية' : 'تعيين رئيسية'}
+                </button>
                 <a href={im} target="_blank" rel="noreferrer" className="text-xs font-bold text-slate-600">فتح</a>
               </div>
             </div>
@@ -281,7 +288,6 @@ export default function ProductEditorClient({ product, onSaved, onCancel }: { pr
                 {arr.map((n, i) => (
                   <span key={i} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-700">
                     {n}
-                    <button className="text-xs font-bold text-red-500" onClick={() => removeNote(section, i)}>x</button>
                   </span>
                 ))}
               </div>
