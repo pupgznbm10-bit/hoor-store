@@ -13,7 +13,10 @@ export async function GET(request: NextRequest) {
     }
 
     const allOrders = await readOrders();
-    const userOrders = allOrders.filter((order) => order.userId === user.id).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    const userEmail = user.email.toLowerCase();
+    const userOrders = allOrders
+      .filter((order) => order.userId === user.id || (!order.userId && order.userEmail?.toLowerCase() === userEmail))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     return NextResponse.json({ orders: userOrders }, { status: 200 });
   }
 

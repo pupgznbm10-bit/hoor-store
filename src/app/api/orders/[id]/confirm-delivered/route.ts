@@ -11,9 +11,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const order = orders.find((o) => o.id === id);
     if (!order) return NextResponse.json({ message: 'الطلب غير موجود' }, { status: 404 });
 
-    // ensure the current user owns this order (by email or userId)
-    if (order.userId && order.userId !== user.id) return NextResponse.json({ message: 'غير مسموح' }, { status: 403 });
-    if (!order.userId && order.userEmail && order.userEmail.toLowerCase() !== user.email.toLowerCase()) return NextResponse.json({ message: 'غير مسموح' }, { status: 403 });
+    const ownsOrder = order.userId === user.id
+      || (!order.userId && order.userEmail?.toLowerCase() === user.email.toLowerCase());
+    if (!ownsOrder) return NextResponse.json({ message: 'غير مسموح' }, { status: 403 });
+    if (order.status !== 'Shipped') {
+      return NextResponse.json({ message: 'لا يمكن تأكيد الاستلام قبل شحن الطلب' }, { status: 409 });
+    }
 
     const updated = await markOrderDelivered(id);
     if (!updated) return NextResponse.json({ message: 'فشل تحديث حالة الطلب' }, { status: 500 });

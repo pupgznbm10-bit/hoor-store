@@ -31,20 +31,33 @@ export type OrderRecord = {
   revenueReleased?: boolean;
 };
 
-const DATA_FILE = path.join(process.cwd(), 'src', 'data', 'orders.json');
+const REPO_DATA_FILE = path.join(process.cwd(), 'src', 'data', 'orders.json');
+const TMP_DATA_FILE = path.join('/tmp', 'hoor-orders.json');
+
+function getDataFile() {
+  return process.env.VERCEL ? TMP_DATA_FILE : REPO_DATA_FILE;
+}
 
 async function ensureDataFile() {
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
+  const dataFile = getDataFile();
+  await fs.mkdir(path.dirname(dataFile), { recursive: true });
   try {
-    await fs.access(DATA_FILE);
+    await fs.access(dataFile);
+    return;
   } catch {
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8');
+    try {
+      const seeded = await fs.readFile(REPO_DATA_FILE, 'utf-8');
+      await fs.writeFile(dataFile, seeded, 'utf-8');
+      return;
+    } catch {
+      await fs.writeFile(dataFile, '[]', 'utf-8');
+    }
   }
 }
 
 export async function readOrders(): Promise<OrderRecord[]> {
   await ensureDataFile();
-  const raw = await fs.readFile(DATA_FILE, 'utf-8');
+  const raw = await fs.readFile(getDataFile(), 'utf-8');
   const cleaned = raw.replace(/^\uFEFF/, '');
   const parsed = cleaned ? JSON.parse(cleaned) : [];
   return Array.isArray(parsed) ? parsed : [];
@@ -52,7 +65,7 @@ export async function readOrders(): Promise<OrderRecord[]> {
 
 export async function writeOrders(orders: OrderRecord[]) {
   await ensureDataFile();
-  await fs.writeFile(DATA_FILE, JSON.stringify(orders, null, 2), 'utf-8');
+  await fs.writeFile(getDataFile(), JSON.stringify(orders, null, 2), 'utf-8');
 }
 
 export async function getOrdersForUser(userId: string) {
