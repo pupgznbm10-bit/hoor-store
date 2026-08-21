@@ -16,9 +16,9 @@ type ProductRecord = {
   volumes?: string[];
 };
 
-export default function ProductDetails({ params }: { params: Promise<{ id: string }> }) {
+export default function ProductDetails({ params }: { params: Promise<{ id?: string }> }) {
   const resolvedParams = use(params);
-  const id = resolvedParams.id;
+  const id = resolvedParams.id ?? '';
   const product = (products as ProductRecord[]).find((item) => item.id === id);
   const { addToCart } = useCart();
   const fallbackImage = '/placeholder.png';

@@ -15,15 +15,41 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const safeSlug = String(slug || 'men');
   const isBestseller = safeSlug === 'bestsellers';
   type CategoryProduct = {
-    id: string;
+    id?: string;
+    name?: string;
+    name_ar?: string;
+    name_en?: string;
     category?: string;
     bestseller?: boolean;
+    images?: string[];
+    price?: number;
+    fragranceFamily?: string;
+    notes?: string[] | Record<string, string[]>;
+    volumes?: string[];
+    originalPrice?: number;
   };
 
-  const productsList = (products as CategoryProduct[]).filter((product) => {
-    if (isBestseller) return Boolean(product.bestseller);
-    return product.category === safeSlug;
+  const normalizeProduct = (product: CategoryProduct) => ({
+    id: String(product.id ?? product.name ?? 'product'),
+    name: product.name ?? product.name_ar ?? product.name_en ?? 'منتج',
+    name_ar: product.name_ar,
+    name_en: product.name_en,
+    category: product.category,
+    bestseller: Boolean(product.bestseller),
+    images: Array.isArray(product.images) ? product.images : [],
+    price: Number(product.price ?? 0),
+    fragranceFamily: product.fragranceFamily,
+    notes: product.notes,
+    volumes: Array.isArray(product.volumes) ? product.volumes : ['50ml'],
+    originalPrice: product.originalPrice,
   });
+
+  const productsList = (products as CategoryProduct[])
+    .filter((product) => {
+      if (isBestseller) return Boolean(product.bestseller);
+      return product.category === safeSlug;
+    })
+    .map(normalizeProduct);
 
   const meta = pageMeta[safeSlug] ?? pageMeta.men;
 

@@ -16,7 +16,15 @@ type ProductItem = {
   tags?: string[];
   notes?: Record<string, string[]>;
   volumes?: string[];
+  images?: string[];
 };
+
+const normalizeProduct = (p: ProductItem) => ({
+  ...p,
+  id: p.id ?? String(p.name ?? 'product'),
+  price: Number(p.price ?? 0),
+  images: p.images ?? [],
+});
 
 export default function ProductsPage() {
   const [ALL_PRODUCTS, setAllProducts] = useState<ProductItem[]>([]);
@@ -91,7 +99,8 @@ export default function ProductsPage() {
         if (selectedFamilies.length && !selectedFamilies.includes(p.fragranceFamily ?? '')) return false;
         if (selectedNotes.length && !selectedNotes.some((n) => noteValues.includes(n))) return false;
         if (selectedVolumes.length && !selectedVolumes.some((v) => (p.volumes ?? []).includes(v))) return false;
-        if (p.price < priceRange[0] || p.price > priceRange[1]) return false;
+        const productPrice = Number(p.price ?? 0);
+        if (productPrice < priceRange[0] || productPrice > priceRange[1]) return false;
         return true;
       })
       .sort((a, b) => {
@@ -244,7 +253,7 @@ export default function ProductsPage() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filtered.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard key={p.id ?? String(p.name ?? 'product')} product={normalizeProduct(p)} />
             ))}
           </div>
         </section>
