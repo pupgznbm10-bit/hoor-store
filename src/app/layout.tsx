@@ -17,13 +17,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
-      <body>
+      <body className="overflow-x-hidden">
         <StoreProvider>
           <AuthProvider>
             <CartProvider>
               <Header />
 
-              <main className="min-h-screen bg-ivory text-charcoalText">{children}</main>
+              <main className="min-h-screen overflow-x-hidden bg-ivory text-charcoalText">{children}</main>
 
               <Footer />
               <ToastProvider />

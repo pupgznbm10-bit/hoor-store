@@ -49,7 +49,7 @@ export default function HomePage() {
       <ScrollingBanner text="✨ اكتشف أفخم العطور الفاخرة مع أفضل الأسعار والخدمة الممتازة ✨" speed={30} />
       
       <section
-        className="relative overflow-hidden"
+        className="relative w-full max-w-full overflow-hidden"
         style={{
           backgroundImage:
             "linear-gradient(135deg, rgba(15,23,42,0.72), rgba(15,23,42,0.35)), url('https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=1600&q=80')",
@@ -57,16 +57,16 @@ export default function HomePage() {
           backgroundSize: 'cover',
         }}
       >
-        <div className="mx-auto max-w-6xl px-6 py-24 text-right text-white md:py-28">
+        <div className="mx-auto w-full max-w-6xl px-3 py-16 text-right text-white sm:px-6 sm:py-24 md:py-28">
           <div className="max-w-2xl">
-            <p className="mb-4 text-sm font-medium tracking-[0.25em] text-[#f6d782]">LUXURY PERFUMERY</p>
-            <h1 className="text-4xl font-black leading-tight md:text-6xl">متجر حور</h1>
-            <h2 className="mt-2 text-2xl font-semibold md:text-4xl">بوتيك العطور الفاخرة</h2>
-            <p className="mt-5 max-w-xl text-base text-white/85 md:text-lg">
+            <p className="mb-4 text-xs font-medium tracking-[0.2em] text-[#f6d782] sm:text-sm">LUXURY PERFUMERY</p>
+            <h1 className="text-3xl font-black leading-tight sm:text-4xl md:text-6xl">متجر حور</h1>
+            <h2 className="mt-2 text-xl font-semibold sm:text-2xl md:text-4xl">بوتيك العطور الفاخرة</h2>
+            <p className="mt-4 max-w-xl text-sm text-white/85 sm:text-base md:text-lg">
               اكتشف تشكيلتنا المختارة من العطور الراقية، المزيج المثالي بين الأصالة والحداثة، مع توصيل فاخر وحملات مميزة.
             </p>
-            <div className="mt-8 flex flex-wrap justify-end gap-3">
-              <Link href="/products" className="rounded-full bg-[#d4af37] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#d4af37]/30 btn-hover-bounce transition">استكشف التشكيلة</Link>
+            <div className="mt-6 flex flex-wrap justify-end gap-2 sm:gap-3">
+              <Link href="/products" className="rounded-full bg-[#d4af37] px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#d4af37]/30 btn-hover-bounce transition sm:px-6 sm:py-3">استكشف التشكيلة</Link>
               <FragranceFinder />
             </div>
           </div>
