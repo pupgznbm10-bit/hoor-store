@@ -8,22 +8,35 @@ export type OtpRecord = {
   createdAt: number;
 };
 
-const OTP_DATA_FILE = path.join(process.cwd(), 'src', 'data', 'otp.json');
+const REPO_OTP_DATA_FILE = path.join(process.cwd(), 'src', 'data', 'otp.json');
+const TMP_OTP_DATA_FILE = path.join('/tmp', 'hoor-otp.json');
 const OTP_EXPIRY_MINUTES = 10; // expire after 10 minutes (match email text)
 
+function getOtpDataFile() {
+  return process.env.VERCEL ? TMP_OTP_DATA_FILE : REPO_OTP_DATA_FILE;
+}
+
 async function ensureOtpFile() {
-  await fs.mkdir(path.dirname(OTP_DATA_FILE), { recursive: true });
+  const otpDataFile = getOtpDataFile();
+  await fs.mkdir(path.dirname(otpDataFile), { recursive: true });
   try {
-    await fs.access(OTP_DATA_FILE);
+    await fs.access(otpDataFile);
+    return;
   } catch {
-    await fs.writeFile(OTP_DATA_FILE, '[]', 'utf-8');
+    try {
+      const seeded = await fs.readFile(REPO_OTP_DATA_FILE, 'utf-8');
+      await fs.writeFile(otpDataFile, seeded, 'utf-8');
+      return;
+    } catch {
+      await fs.writeFile(otpDataFile, '[]', 'utf-8');
+    }
   }
 }
 
 export async function readOtpRecords(): Promise<OtpRecord[]> {
   await ensureOtpFile();
   try {
-    const raw = await fs.readFile(OTP_DATA_FILE, 'utf-8');
+    const raw = await fs.readFile(getOtpDataFile(), 'utf-8');
     const cleaned = raw.replace(/^\uFEFF/, '');
     const parsed = cleaned ? JSON.parse(cleaned) : [];
     return Array.isArray(parsed) ? parsed : [];
@@ -34,7 +47,7 @@ export async function readOtpRecords(): Promise<OtpRecord[]> {
 
 export async function writeOtpRecords(records: OtpRecord[]) {
   await ensureOtpFile();
-  await fs.writeFile(OTP_DATA_FILE, JSON.stringify(records, null, 2), 'utf-8');
+  await fs.writeFile(getOtpDataFile(), JSON.stringify(records, null, 2), 'utf-8');
 }
 
 export function generateOtpCode(): string {

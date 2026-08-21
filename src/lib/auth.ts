@@ -20,10 +20,15 @@ export type UserRecord = {
 
 export type SafeUser = Omit<UserRecord, 'passwordHash'>;
 
-const DATA_FILE = path.join(process.cwd(), 'src', 'data', 'users.json');
+const REPO_DATA_FILE = path.join(process.cwd(), 'src', 'data', 'users.json');
+const TMP_DATA_FILE = path.join('/tmp', 'hoor-users.json');
 const JWT_SECRET = process.env.JWT_SECRET || 'hoor-store-dev-secret-change-me';
 const AUTH_COOKIE_NAME = 'hoor_token';
 export const ADMIN_EMAIL = 'mw01551687704@gmail.com';
+
+function getDataFile() {
+  return process.env.VERCEL ? TMP_DATA_FILE : REPO_DATA_FILE;
+}
 
 export function isAdminEmail(email?: string | null) {
   return !!email && email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
@@ -37,17 +42,25 @@ export function isAdminUser(user?: SafeUser | null) {
 }
 
 async function ensureDataFile() {
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
+  const dataFile = getDataFile();
+  await fs.mkdir(path.dirname(dataFile), { recursive: true });
   try {
-    await fs.access(DATA_FILE);
+    await fs.access(dataFile);
+    return;
   } catch {
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8');
+    try {
+      const seeded = await fs.readFile(REPO_DATA_FILE, 'utf-8');
+      await fs.writeFile(dataFile, seeded, 'utf-8');
+      return;
+    } catch {
+      await fs.writeFile(dataFile, '[]', 'utf-8');
+    }
   }
 }
 
 export async function readUsers(): Promise<UserRecord[]> {
   await ensureDataFile();
-  const raw = await fs.readFile(DATA_FILE, 'utf-8');
+  const raw = await fs.readFile(getDataFile(), 'utf-8');
   const cleaned = raw.replace(/^\uFEFF/, '');
   const parsed = cleaned ? JSON.parse(cleaned) : [];
   return Array.isArray(parsed) ? parsed : [];
@@ -55,7 +68,7 @@ export async function readUsers(): Promise<UserRecord[]> {
 
 export async function writeUsers(users: UserRecord[]) {
   await ensureDataFile();
-  await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf-8');
+  await fs.writeFile(getDataFile(), JSON.stringify(users, null, 2), 'utf-8');
 }
 
 export function sanitizeUser(user: UserRecord): SafeUser {
