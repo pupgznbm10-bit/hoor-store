@@ -19,13 +19,13 @@ export async function POST(request: NextRequest) {
 
     try {
       const otp = await createOtp(email, 30); // 30s cooldown
-      try {
-        await sendOtpEmail(email, otp, type === 'register' ? 'register' : 'reset');
-      } catch (e) {
-        console.error('sendOtpEmail failed', e);
-      }
+      const emailResult = await sendOtpEmail(email, otp, type === 'register' ? 'register' : 'reset');
 
-      return NextResponse.json({ message: 'تم إعادة إرسال رمز التحقق' });
+      return NextResponse.json({
+        message: emailResult.sent ? 'تم إعادة إرسال رمز التحقق' : 'تم إنشاء رمز جديد، لكن البريد الإلكتروني لم يرسل في بيئة Vercel. استخدم الرمز التالي: ' + otp,
+        otp: emailResult.otp,
+        fallback: !emailResult.sent,
+      });
     } catch (err: any) {
       if (String(err.message).startsWith('Cooldown')) {
         return NextResponse.json({ message: err.message }, { status: 429 });

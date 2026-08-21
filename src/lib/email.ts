@@ -28,23 +28,29 @@ export async function sendOtpEmail(email: string, otp: string, type: 'register' 
   `;
 
   if (!transporterReady()) {
-    // Fallback: log to console in development
-    console.log(`[EMAIL] Would send OTP to ${email}: ${otp}`);
-    return;
+   console.log(`[EMAIL] Would send OTP to ${email}: ${otp}`);
+   return { sent: false, otp, fallback: true };
   }
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  try {
+   const transporter = nodemailer.createTransport({
+     service: 'gmail',
+     auth: {
+       user: process.env.EMAIL_USER,
+       pass: process.env.EMAIL_PASS,
+     },
+   });
 
-  await transporter.sendMail({
-    from: `${SENDER_NAME} <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject,
-    html,
-  });
+   await transporter.sendMail({
+     from: `${SENDER_NAME} <${process.env.EMAIL_USER}>`,
+     to: email,
+     subject,
+     html,
+   });
+
+   return { sent: true, otp, fallback: false };
+  } catch (error) {
+   console.error('sendOtpEmail failed:', error);
+   return { sent: false, otp, fallback: true };
+  }
 }

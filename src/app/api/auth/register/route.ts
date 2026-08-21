@@ -34,16 +34,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'حدث خطأ أثناء إنشاء الحساب' }, { status: 500 });
     }
 
-    // generate OTP and send email for verification
     const otp = await createOtp(email);
-    try {
-      await sendOtpEmail(email, otp, 'register');
-    } catch (e) {
-      console.error('sendOtpEmail failed', e);
-    }
+    const emailResult = await sendOtpEmail(email, otp, 'register');
 
-    // respond as pending — do not sign in until email verified
-    return NextResponse.json({ message: 'تم إنشاء الحساب — يرجى التحقق من بريدك الإلكتروني', pending: true, email: email.replace(/(.{2})(.*)(@.*)/, '$1***$3'), emailRaw: email }, { status: 201 });
+    return NextResponse.json({
+      message: emailResult.sent ? 'تم إنشاء الحساب — يرجى التحقق من بريدك الإلكتروني' : 'تم إنشاء الحساب، ولكن البريد الإلكتروني لم يرسل في بيئة Vercel. استخدم رمز التحقق التالي: ' + otp,
+      pending: true,
+      email: email.replace(/(.{2})(.*)(@.*)/, '$1***$3'),
+      emailRaw: email,
+      otp: emailResult.otp,
+      fallback: !emailResult.sent,
+    }, { status: 201 });
   } catch (error) {
     console.error('Register error', error);
     return NextResponse.json(

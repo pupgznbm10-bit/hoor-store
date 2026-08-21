@@ -18,17 +18,13 @@ export async function POST(request: NextRequest) {
     }
 
     const otp = await createOtp(email);
-
-    try {
-      await sendOtpEmail(email, otp, 'reset');
-    } catch (e) {
-      console.error('sendOtpEmail failed', e);
-      // continue — OTP is still stored
-    }
+    const emailResult = await sendOtpEmail(email, otp, 'reset');
 
     return NextResponse.json({
-      message: 'تم إرسال رمز التحقق إلى بريدك الإلكتروني',
+      message: emailResult.sent ? 'تم إرسال رمز التحقق إلى بريدك الإلكتروني' : 'تم إنشاء رمز التحقق، لكن البريد الإلكتروني لم يرسل في بيئة Vercel. استخدم الرمز التالي: ' + otp,
       email: email.replace(/(.{2})(.*)(@.*)/, '$1***$3'),
+      otp: emailResult.otp,
+      fallback: !emailResult.sent,
     });
   } catch (error) {
     console.error('forgot-password error:', error);

@@ -15,6 +15,14 @@ export default function VerifyEmailClient() {
 
   const [resendCountdown, setResendCountdown] = useState(0);
 
+  React.useEffect(() => {
+    const fallbackOtp = localStorage.getItem('pending_verification_otp');
+    if (fallbackOtp) {
+      setCode(fallbackOtp);
+      toast.info(`رمز التحقق المؤقت: ${fallbackOtp}`);
+    }
+  }, []);
+
   const verify = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !code) return toast.error('الرجاء إدخال البريد والرمز');
@@ -52,7 +60,12 @@ export default function VerifyEmailClient() {
       const res = await fetch('/api/auth/resend-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: targetEmail, type: 'register' }) });
       const data = await res.json();
       if (!res.ok) return toast.error(data.message || 'فشل إعادة الإرسال');
-      toast.success('تم إعادة إرسال رمز التحقق');
+      if (data.otp) {
+        localStorage.setItem('pending_verification_otp', String(data.otp));
+        setCode(String(data.otp));
+        toast.info(`رمز التحقق الجديد: ${data.otp}`);
+      }
+      toast.success(data.fallback ? 'تم إنشاء رمز جديد، استخدمه للتأكيد' : 'تم إعادة إرسال رمز التحقق');
       setResendCountdown(30);
       const t = setInterval(() => {
         setResendCountdown((c) => {

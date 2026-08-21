@@ -110,12 +110,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       const data = await res.json();
       if (!res.ok) return { success: false, message: data.message };
-      // If registration is pending email verification, redirect user to verify page
       if (data.pending) {
-        toast.success('تم إنشاء الحساب. يرجى التحقق من بريدك الإلكتروني');
-        // persist pending email locally so verify page can use it
         try { localStorage.setItem('pending_verification_email', String(payload.email || '')); } catch(e) {}
-        // prefer server-provided raw email if present
+        if (data.otp) {
+          try { localStorage.setItem('pending_verification_otp', String(data.otp)); } catch(e) {}
+          toast.info(`رمز التحقق المؤقت: ${data.otp}`);
+        }
+        toast.success(data.fallback ? 'تم إنشاء الحساب، استخدم الرمز الظاهر في الرسالة للتأكيد' : 'تم إنشاء الحساب. يرجى التحقق من بريدك الإلكتروني');
         const redirectEmail = data.emailRaw || payload.email || '';
         try { window.location.href = `/auth/verify-email?email=${encodeURIComponent(String(redirectEmail))}`; } catch (e) {}
         return { success: true };

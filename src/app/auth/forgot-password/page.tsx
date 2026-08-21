@@ -32,7 +32,11 @@ export default function ForgotPasswordPage() {
       const res = await fetch('/api/auth/forgot-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
       const data = await res.json();
       if (!res.ok) return toast.error(data.message || 'فشل الإرسال');
-      toast.success('تم إرسال رمز التحقق');
+      if (data.otp) {
+        setCode(String(data.otp));
+        toast.info(`رمز التحقق: ${data.otp}`);
+      }
+      toast.success(data.fallback ? 'تم إنشاء رمز التحقق، استخدمه للتأكيد' : 'تم إرسال رمز التحقق');
       setStep('otp');
       startResendTimer();
     } catch (err) {
@@ -81,7 +85,11 @@ export default function ForgotPasswordPage() {
       const res = await fetch('/api/auth/resend-otp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: targetEmail, type: 'reset' }) });
       const data = await res.json();
       if (!res.ok) return toast.error(data.message || 'فشل إعادة الإرسال');
-      toast.success('تم إعادة إرسال رمز التحقق');
+      if (data.otp) {
+        setCode(String(data.otp));
+        toast.info(`رمز التحقق الجديد: ${data.otp}`);
+      }
+      toast.success(data.fallback ? 'تم إنشاء رمز جديد، استخدمه للتأكيد' : 'تم إعادة إرسال رمز التحقق');
       startResendTimer();
     } catch (err) {
       console.error(err);
