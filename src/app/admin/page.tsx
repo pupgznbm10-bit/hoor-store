@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader2, PackageCheck, Truck, CheckCircle2, Wallet, ShoppingCart, TrendingUp } from 'lucide-react';
+import { Loader2, PackageCheck, Truck, CheckCircle2, Wallet, ShoppingCart, TrendingUp, FileSpreadsheet, Plus, ClipboardList, Package } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import ProductListClient from './products/ProductListClient';
 import OrderCreatorClient from './OrderCreatorClient';
@@ -34,6 +34,7 @@ export default function AdminPage() {
   const [estimateMap, setEstimateMap] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<'orders' | 'products'>('orders');
   const [showCreateOrder, setShowCreateOrder] = useState(false);
+  const [settling, setSettling] = useState(false);
 
   useEffect(() => {
     if (!authLoading && (!user || !isAdmin)) {
@@ -43,7 +44,7 @@ export default function AdminPage() {
 
   const loadOrders = async () => {
     try {
-      const res = await fetch('/api/orders', { cache: 'force-cache' });
+      const res = await fetch('/api/orders', { cache: 'no-store' });
       const data = await res.json();
       setOrders(data.orders ?? []);
     } catch (err) {
@@ -55,7 +56,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (user && isAdmin) {
-      loadOrders();
+      const refreshTimer = window.setTimeout(() => { void loadOrders(); }, 0);
+      return () => window.clearTimeout(refreshTimer);
     }
   }, [user, isAdmin]);
 
@@ -108,8 +110,43 @@ export default function AdminPage() {
     setEstimateMap((m) => ({ ...m, [orderId]: value }));
   };
 
+  const settleAccount = async () => {
+    if (!window.confirm('سيتم إنشاء كشف الحساب ثم حذف الطلبات الحالية والإيرادات من اللوحة. هل تريد المتابعة؟')) return;
+    setSettling(true);
+    try {
+      const res = await fetch('/api/admin/orders/settle', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'تعذر تصفية الحساب');
+
+      const reportWindow = window.open('', '_blank', 'noopener,noreferrer');
+      if (reportWindow) {
+        reportWindow.document.write(data.report);
+        reportWindow.document.close();
+        reportWindow.focus();
+        reportWindow.print();
+      }
+
+      const blob = new Blob([`\uFEFF${data.report}`], { type: 'application/vnd.ms-excel;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `hoor-account-${new Date().toISOString().slice(0, 10)}.xls`;
+      link.click();
+      URL.revokeObjectURL(url);
+      setOrders([]);
+      alert('تم تصفية الحساب وتنزيل كشف Excel وفتح نافذة الطباعة.');
+    } catch (error) {
+      console.error('settleAccount error', error);
+      alert('تعذر تصفية الحساب');
+    } finally {
+      setSettling(false);
+    }
+  };
+
   const stats = useMemo(() => {
-    const totalRevenue = orders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+    const totalRevenue = orders
+      .filter((order) => order.status === 'Delivered' || order.revenueReleased)
+      .reduce((sum, order) => sum + Number(order.total || 0), 0);
     const pending = orders.filter((o) => o.status === 'Pending').length;
     const shipped = orders.filter((o) => o.status === 'Shipped').length;
     const delivered = orders.filter((o) => o.status === 'Delivered').length;
@@ -154,9 +191,21 @@ export default function AdminPage() {
       </div>
 
       {/* Tabs */}
-      <div className="mb-6 flex items-center gap-3">
-        <button onClick={() => setActiveTab('orders')} className={`px-4 py-2 rounded-md ${activeTab === 'orders' ? 'bg-[#d4af37] text-white' : 'bg-white border'}`}>إدارة الطلبات</button>
-        <button onClick={() => setActiveTab('products')} className={`px-4 py-2 rounded-md ${activeTab === 'products' ? 'bg-[#d4af37] text-white' : 'bg-white border'}`}>إدارة المنتجات</button>
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <button
+          onClick={() => setActiveTab('orders')}
+          className={`admin-action-button group inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-black ${activeTab === 'orders' ? 'border-[#c99b24] bg-gradient-to-l from-[#9b6d00] via-[#c99b24] to-[#e2bd55] text-white shadow-[0_10px_24px_rgba(166,124,0,0.25)]' : 'border-slate-200 bg-white text-slate-700 shadow-sm hover:border-[#d4af37] hover:text-[#8a5f00]'}`}
+        >
+          <ClipboardList size={17} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+          إدارة الطلبات
+        </button>
+        <button
+          onClick={() => setActiveTab('products')}
+          className={`admin-action-button group inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-black ${activeTab === 'products' ? 'border-[#17356a] bg-gradient-to-l from-[#0b132b] via-[#17356a] to-[#2867a8] text-white shadow-[0_10px_24px_rgba(11,19,43,0.22)]' : 'border-slate-200 bg-white text-slate-700 shadow-sm hover:border-[#2867a8] hover:text-[#17356a]'}`}
+        >
+          <Package size={17} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+          إدارة المنتجات
+        </button>
       </div>
 
       {activeTab === 'orders' ? (
@@ -183,8 +232,15 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="ml-4">
-              <button onClick={() => setShowCreateOrder(true)} className="px-4 py-2 bg-blue-600 text-white rounded">إضافة طلب جديد</button>
+            <div className="ml-4 flex shrink-0 flex-wrap justify-end gap-2">
+              <button onClick={settleAccount} disabled={settling || orders.length === 0} className="admin-action-button group inline-flex items-center gap-2 rounded-xl bg-gradient-to-l from-[#9b6d00] via-[#c99b24] to-[#e2bd55] px-4 py-3 text-sm font-black text-white shadow-[0_10px_24px_rgba(166,124,0,0.28)] disabled:cursor-not-allowed disabled:opacity-50">
+                <FileSpreadsheet size={17} className="transition-transform duration-300 group-hover:rotate-6" />
+                {settling ? 'جاري التصفية...' : 'تصفية الحساب'}
+              </button>
+              <button onClick={() => setShowCreateOrder(true)} className="admin-action-button inline-flex items-center gap-2 rounded-xl bg-gradient-to-l from-[#0b132b] via-[#17356a] to-[#2867a8] px-4 py-3 text-sm font-black text-white shadow-[0_10px_24px_rgba(11,19,43,0.25)]">
+                <Plus size={18} />
+                إضافة طلب جديد
+              </button>
             </div>
           </div>
 
@@ -233,7 +289,9 @@ export default function AdminPage() {
                           className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 outline-none transition focus:border-[#d4af37]"
                         >
                           {statusOptions.map((status) => (
-                            <option key={status} value={status}>{status}</option>
+                            <option key={status} value={status}>
+                              {status === 'Pending' ? 'قيد الانتظار' : status === 'Shipped' ? 'تم الشحن' : 'تم الاستلام'}
+                            </option>
                           ))}
                         </select>
 

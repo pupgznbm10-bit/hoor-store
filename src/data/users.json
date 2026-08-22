@@ -1,15 +1,13 @@
 [
   {
     "id": "u_1787179073804_qax7fc",
-    "fullName": "فا",
+    "fullName": "يوسف وليد",
     "email": "halandmode@gmail.com",
-    "phone": "01551687704",
+    "phone": "",
     "passwordHash": "$2b$10$hpKQjn9KxGnVENQVGvWLhux2MVfJM0WJAtv7QSpN1ovUHz9T8VYdK",
     "createdAt": "2026-08-19T22:37:53.804Z",
     "isVerified": true,
-    "role": "user",
-    "city": "فقافق",
-    "address": "اقفا"
+    "role": "user"
   },
   {
     "id": "u_admin_20260820",

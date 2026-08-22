@@ -65,6 +65,48 @@ body {
   transform: translateY(0px);
 }
 
+.admin-action-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+}
+
+.admin-action-button::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.35) 48%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform 550ms ease;
+}
+
+.admin-action-button:hover {
+  transform: translateY(-3px) scale(1.015);
+  filter: saturate(1.12);
+}
+
+.admin-action-button:hover::before {
+  transform: translateX(130%);
+}
+
+.admin-action-button:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.admin-action-button:disabled {
+  transform: none;
+  filter: grayscale(0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-action-button,
+  .admin-action-button::before {
+    transition: none;
+  }
+}
+
 /* الظل اللامع */
 .glow-effect {
   position: relative;

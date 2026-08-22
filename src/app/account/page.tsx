@@ -185,7 +185,9 @@ export default function AccountPage() {
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="flex flex-col items-end gap-2">
-                      <span className="rounded-full bg-[#eef7ed] px-3 py-1 text-xs font-bold text-[#146c43]">{order.status}</span>
+                      <span className="rounded-full bg-[#eef7ed] px-3 py-1 text-xs font-bold text-[#146c43]">
+                        {order.status === 'Pending' ? 'قيد الانتظار' : order.status === 'Shipped' ? 'تم الشحن' : 'تم الاستلام'}
+                      </span>
                       <span className="text-xs text-slate-500">{new Date(order.createdAt).toLocaleDateString('ar-EG')}</span>
                       {order.deliveryEstimate && <span className="text-xs text-slate-500">موعد التوصيل المتوقع: <span className="font-semibold text-slate-700">{order.deliveryEstimate}</span></span>}
                       {order.shippedAt && <span className="text-xs text-slate-500">تاريخ الشحن: <span className="font-semibold text-slate-700">{new Date(order.shippedAt).toLocaleString('ar-EG')}</span></span>}

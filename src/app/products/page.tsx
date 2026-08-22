@@ -118,8 +118,8 @@ export default function ProductsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
-        <aside className="hidden lg:block">
-          <div className="rounded-lg bg-white p-4 shadow-sm">
+        <aside className="block lg:sticky lg:top-24 lg:self-start">
+          <div className="rounded-2xl border border-[#efe2c2] bg-white p-4 shadow-sm">
             <h4 className="mb-3 font-semibold">تصفية البحث</h4>
 
             <div className="mb-4">

@@ -52,7 +52,7 @@ export default function HomePage() {
         className="relative w-full max-w-full overflow-hidden"
         style={{
           backgroundImage:
-            "linear-gradient(135deg, rgba(15,23,42,0.72), rgba(15,23,42,0.35)), url('https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=1600&q=80')",
+            "linear-gradient(135deg, rgba(15,23,42,0.22), rgba(15,23,42,0.08)), url('/uploads/hoor-banner.png')",
           backgroundPosition: 'center',
           backgroundSize: 'cover',
         }}

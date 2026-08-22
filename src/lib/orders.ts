@@ -124,7 +124,25 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
   const index = orders.findIndex((order) => order.id === id);
   if (index === -1) return null;
 
-  orders[index] = { ...orders[index], status, updatedAt: new Date().toISOString() };
+  const now = new Date().toISOString();
+  orders[index] = {
+    ...orders[index],
+    status,
+    shippedAt: status === 'Shipped' ? orders[index].shippedAt || now : orders[index].shippedAt,
+    deliveredAt: status === 'Delivered' ? orders[index].deliveredAt || now : orders[index].deliveredAt,
+    revenueReleased: status === 'Delivered' ? true : orders[index].revenueReleased,
+    updatedAt: now,
+  };
   await writeOrders(orders);
   return orders[index];
+}
+
+export async function settleOrders() {
+  const orders = await readOrders();
+  const releasedRevenue = orders
+    .filter((order) => order.status === 'Delivered' || order.revenueReleased)
+    .reduce((sum, order) => sum + Number(order.total || 0), 0);
+
+  await writeOrders([]);
+  return { orders, releasedRevenue };
 }

@@ -19,7 +19,44 @@ export default function CheckoutPage() {
   const phoneRef = useRef<HTMLInputElement | null>(null);
   const cityRef = useRef<HTMLInputElement | null>(null);
   const addrRef = useRef<HTMLTextAreaElement | null>(null);
+  const draftLoadedRef = useRef(false);
   const shippingFee = 40;
+  const draftKey = user ? `hoor_checkout_draft_${user.id}` : null;
+
+  useEffect(() => {
+    if (!draftKey) return;
+    const loadDraftTimer = window.setTimeout(() => {
+      try {
+        const raw = localStorage.getItem(draftKey);
+        if (raw) {
+          const draft = JSON.parse(raw);
+          setShipping(draft.shipping || { name: '', phone: '', city: '', address: '' });
+          setPaymentMethod(draft.paymentMethod || 'cod');
+          setStep(Number(draft.step) >= 1 && Number(draft.step) <= 3 ? Number(draft.step) : 1);
+        }
+      } catch (error) {
+        console.warn('failed to load checkout draft', error);
+      } finally {
+        draftLoadedRef.current = true;
+      }
+    }, 0);
+    return () => window.clearTimeout(loadDraftTimer);
+  }, [draftKey]);
+
+  useEffect(() => {
+    if (!draftKey || !draftLoadedRef.current || cartItems.length === 0 || step === 4) return;
+    try {
+      localStorage.setItem(draftKey, JSON.stringify({
+        items: cartItems,
+        shipping,
+        paymentMethod,
+        step,
+        updatedAt: new Date().toISOString(),
+      }));
+    } catch (error) {
+      console.warn('failed to save checkout draft', error);
+    }
+  }, [draftKey, cartItems, shipping, paymentMethod, step]);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -28,6 +65,14 @@ export default function CheckoutPage() {
   }, [user, loading, router]);
 
   const total = subtotal + shippingFee;
+
+  const cancelCheckout = () => {
+    if (!window.confirm('سيتم إلغاء الطلب غير المكتمل وحذف بيانات الشحن والدفع. هل تريد المتابعة؟')) return;
+    if (draftKey) localStorage.removeItem(draftKey);
+    localStorage.removeItem('hoor_cart_v1');
+    clearCart();
+    router.push('/account');
+  };
 
   const placeOrder = async () => {
     if (!user || cartItems.length === 0) {
@@ -102,6 +147,7 @@ export default function CheckoutPage() {
       toast.success('تم تأكيد طلبك بنجاح', {
         description: `رقم الطلب: ${data.order.id}`,
       });
+      if (draftKey) localStorage.removeItem(draftKey);
       clearCart();
       // If the user provided shipping details and they are not already saved, persist them to the profile
       try {
@@ -167,7 +213,12 @@ export default function CheckoutPage() {
     <div className="mx-auto max-w-6xl px-4 py-12">
       <div className="mb-8">
         <p className="text-sm font-medium text-[#a67c00]">إتمام الطلب</p>
-        <h1 className="mt-2 text-3xl font-black text-[#111827]">تأكيد الشحن والدفع</h1>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+          <h1 className="text-3xl font-black text-[#111827]">تأكيد الشحن والدفع</h1>
+          <button onClick={cancelCheckout} className="rounded-full border border-red-200 bg-white px-4 py-2 text-sm font-bold text-red-700 transition hover:bg-red-50">
+            إلغاء العملية
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
