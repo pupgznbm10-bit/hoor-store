@@ -107,6 +107,8 @@ body {
 
 .product-card-motion {
   position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 420px;
   animation: productCardReveal 560ms cubic-bezier(.2,.8,.2,1) both;
   transition: transform 320ms cubic-bezier(.2,.8,.2,1), box-shadow 320ms ease, border-color 320ms ease;
 }

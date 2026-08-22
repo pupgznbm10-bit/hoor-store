@@ -26,7 +26,6 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const productName = product.name_ar || product.name || 'Perfume';
   const primaryImage = product.images?.[0] ?? '/placeholder.png';
-  const hoverImage = product.images?.[1] ?? primaryImage;
 
   const noteSummary = Array.isArray(product.notes)
     ? product.notes
@@ -56,18 +55,9 @@ export default function ProductCard({ product }: { product: Product }) {
             alt={productName}
             loading="lazy"
             decoding="async"
-            sizes="(max-width: 768px) 100vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = fallbackImage; }}
-            className="product-card-image h-full w-full object-cover group-hover:opacity-0"
-          />
-          <img
-            src={hoverImage}
-            alt={`${productName} hover`}
-            loading="lazy"
-            decoding="async"
-            sizes="(max-width: 768px) 100vw, 25vw"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = fallbackImage; }}
-            className="product-card-image absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+            className="product-card-image h-full w-full object-cover"
           />
         </Link>
 
