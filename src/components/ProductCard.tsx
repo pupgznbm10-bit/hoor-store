@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const fallbackImage = '/placeholder.png';
 
   return (
-    <article className="group overflow-hidden rounded-[20px] border border-[#efe5d4] bg-white shadow-[0_20px_45px_rgba(14,17,28,0.08)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(14,17,28,0.12)] sm:rounded-[26px]">
+    <article className="product-card-motion group overflow-hidden rounded-[20px] border border-[#efe5d4] bg-white shadow-[0_20px_45px_rgba(14,17,28,0.08)] sm:rounded-[26px]">
       <div className="relative aspect-[4/5] overflow-hidden bg-[#f6f0e7]">
         <Link href={`/products/${product.id}`} className="block h-full w-full">
           <img
@@ -58,7 +58,7 @@ export default function ProductCard({ product }: { product: Product }) {
             decoding="async"
             sizes="(max-width: 768px) 100vw, 25vw"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = fallbackImage; }}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-105 group-hover:opacity-0"
+            className="product-card-image h-full w-full object-cover group-hover:opacity-0"
           />
           <img
             src={hoverImage}
@@ -67,7 +67,7 @@ export default function ProductCard({ product }: { product: Product }) {
             decoding="async"
             sizes="(max-width: 768px) 100vw, 25vw"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = fallbackImage; }}
-            className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-500 group-hover:opacity-100 group-hover:scale-105"
+            className="product-card-image absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
           />
         </Link>
 
