@@ -4,6 +4,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import ProductCard from '../../components/ProductCard';
 import CartDrawer from '../../components/CartDrawer';
 import { useCart } from '../../context/CartContext';
+import { SlidersHorizontal, X } from 'lucide-react';
 
 type ProductItem = {
   id?: string;
@@ -35,6 +36,7 @@ export default function ProductsPage() {
   const [selectedVolumes, setSelectedVolumes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [sortBy, setSortBy] = useState('الأحدث');
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const { isCartOpen } = useCart();
 
   const [families, setFamilies] = useState<string[]>([]);
@@ -118,9 +120,22 @@ export default function ProductsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
-        <aside className="block lg:sticky lg:top-24 lg:self-start">
+        {filtersOpen && (
+          <button
+            aria-label="إغلاق التصفية"
+            onClick={() => setFiltersOpen(false)}
+            className="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-[2px] lg:hidden"
+          />
+        )}
+
+        <aside className={`${filtersOpen ? 'translate-x-0' : 'translate-x-full'} fixed inset-y-0 right-0 z-50 block w-[min(90vw,380px)] overflow-y-auto bg-white p-4 shadow-2xl transition-transform duration-300 lg:sticky lg:top-24 lg:z-auto lg:block lg:w-auto lg:translate-x-0 lg:overflow-visible lg:bg-transparent lg:p-0 lg:shadow-none`}>
           <div className="rounded-2xl border border-[#efe2c2] bg-white p-4 shadow-sm">
-            <h4 className="mb-3 font-semibold">تصفية البحث</h4>
+            <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-4">
+              <h4 className="font-semibold">تصفية البحث</h4>
+              <button onClick={() => setFiltersOpen(false)} aria-label="إغلاق التصفية" className="rounded-full bg-slate-100 p-2 text-slate-700 lg:hidden">
+                <X size={18} />
+              </button>
+            </div>
 
             <div className="mb-4">
               <label className="text-sm font-medium">التصنيف</label>
@@ -211,9 +226,9 @@ export default function ProductsPage() {
               </div>
             </div>
 
-            <div className="mt-3 flex gap-2">
-              <button onClick={() => { setSelectedCategory('all'); setSelectedFamilies([]); setSelectedNotes([]); setSelectedVolumes([]); setPriceRange([0, 2000]); }} className="rounded bg-slate-100 px-3 py-2">مسح</button>
-              <button onClick={() => {}} className="rounded bg-[#d4af37] px-3 py-2 text-white">تطبيق</button>
+            <div className="sticky bottom-0 mt-5 flex gap-2 border-t border-slate-100 bg-white pt-4">
+              <button onClick={() => { setSelectedCategory('all'); setSelectedFamilies([]); setSelectedNotes([]); setSelectedVolumes([]); setPriceRange([0, 2000]); }} className="flex-1 rounded-xl bg-slate-100 px-3 py-3 font-bold text-slate-700">مسح</button>
+              <button onClick={() => setFiltersOpen(false)} className="flex-1 rounded-xl bg-[#d4af37] px-3 py-3 font-bold text-white shadow-md">عرض النتائج</button>
             </div>
           </div>
         </aside>
@@ -238,7 +253,11 @@ export default function ProductsPage() {
             </div>
           </div>
 
-          <div className="mb-6 flex items-center justify-between gap-3">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <button onClick={() => setFiltersOpen(true)} className="inline-flex items-center gap-2 rounded-full border border-[#efe2c2] bg-white px-4 py-2.5 text-sm font-bold text-[#3a2b12] shadow-sm transition hover:border-[#d4af37] hover:text-[#8a5f00] lg:hidden">
+              <SlidersHorizontal size={17} />
+              تصفية البحث
+            </button>
             <div className="flex flex-1 items-center gap-3">
               <input placeholder="ابحث عن منتج" value={query} onChange={(e) => setQuery(e.target.value)} className="w-full rounded border border-slate-200 px-3 py-2 focus:border-[#d4af37] focus:outline-none" />
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="rounded border border-slate-200 px-3 py-2 focus:border-[#d4af37] focus:outline-none">
