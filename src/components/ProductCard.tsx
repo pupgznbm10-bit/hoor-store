@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const fallbackImage = '/placeholder.png';
 
   return (
-    <article className="group overflow-hidden rounded-[26px] border border-[#efe5d4] bg-white shadow-[0_20px_45px_rgba(14,17,28,0.08)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(14,17,28,0.12)]">
+    <article className="group overflow-hidden rounded-[20px] border border-[#efe5d4] bg-white shadow-[0_20px_45px_rgba(14,17,28,0.08)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(14,17,28,0.12)] sm:rounded-[26px]">
       <div className="relative aspect-[4/5] overflow-hidden bg-[#f6f0e7]">
         <Link href={`/products/${product.id}`} className="block h-full w-full">
           <img
@@ -111,16 +111,16 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
 
-      <div className="space-y-3 p-4">
+      <div className="space-y-2 p-3 sm:space-y-3 sm:p-4">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <Link href={`/products/${product.id}`} className="text-base font-bold text-[#171717] hover:text-[#a67c00] transition">
+            <Link href={`/products/${product.id}`} className="text-sm font-bold text-[#171717] hover:text-[#a67c00] transition sm:text-base">
               {productName}
             </Link>
             {product.name_en && <p className="text-xs text-[#6b7280]">{product.name_en}</p>}
           </div>
           <div className="text-left">
-            <div className="text-base font-black text-[#111827] gold-text-gradient">{product.price.toLocaleString()} ج.م</div>
+            <div className="text-sm font-black text-[#111827] gold-text-gradient sm:text-base">{product.price.toLocaleString()} ج.م</div>
             {product.originalPrice && (
               <div className="text-[11px] text-slate-400 line-through">{product.originalPrice.toLocaleString()} ج.م</div>
             )}
